@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class User {
     private final Integer id;
 
-    private final String name;
+    private String name;
 
-    private final ArrayList<Task> tasks;
+    private ArrayList<Task> tasks;
 
-    private final Pomodoro pomodoro;
+    private Pomodoro pomodoro;
 
-    private final Statistics staData;
+    private Statistics staData;
 
     public User(Integer id, String name, ArrayList<Task> tasks, Pomodoro pomodoro, Statistics staData) {
         this.id = id;
@@ -47,5 +47,21 @@ public class User {
 
     public Statistics getStaData() {
         return staData;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTasks(ArrayList<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public void setPomodoro(Pomodoro pomodoro) {
+        this.pomodoro = pomodoro;
+    }
+
+    public void setStaData(Statistics staData) {
+        this.staData = staData;
     }
 }
