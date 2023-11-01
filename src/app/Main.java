@@ -1,64 +1,39 @@
+
 package app;
 
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.IngredientInputData;
 
 import java.io.IOException;
 
 public class Main {
-
-
-    //private static final String API_URL = "http://api.nstack.in/v1/todos?page=1&limit=10";
-
     public static void main(String[] args) {
-
-//        OkHttpClient client = new OkHttpClient();
-//
-//        Request request = new Request.Builder()
-//                .url(API_URL)
-//                .build();
-//
-//        try (Response response = client.newCall(request).execute()) {
-//            if (!response.isSuccessful()) {
-//                System.err.println("Failed to fetch data: " + response.code());
-//                return;
-//            }
-//            String responseBody = response.body().string();
-//            System.out.println("API Response:");
-//            System.out.println(responseBody);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+        String app_id = "3e1540e3";
+        String app_key = "11c5a456d1c9fd43e0e1166d3fef7d53";
+        String ingr = "sugar";
 
         OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\n\t\"description\": \"reading book\"\n}");
+                    .build();
         Request request = new Request.Builder()
-                .url("https://api-nodejs-todolist.herokuapp.com/task")
-                .method("POST", body)
-                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGRjY2JlYzZiNTVkYTAwMTc1OTcyMmMiLCJpYXQiOjE1NzQ3NTE2ODh9.GPbsl9FLX4VrsGVErodiXypjuz1us4tfD0jwg2_UrzY")
-                .addHeader("Content-Type", "application/json")
-                .build();
+                    .url(String.format("https://api.edamam.com/api/nutrition-data?app_id=%s&app_key=%s&ingr=%s",
+                            app_id, app_key, ingr))
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                System.out.println(response);
+                JSONObject responseCode = new JSONObject(response.code());
 
-        try {
-            Response response = client.newCall(request).execute();
-            System.out.println(response);
-            JSONObject responseBody = new JSONObject(response.body());
-            System.out.println(responseBody);
+                if (responseCode.toString() == "200") {
+                    //Task is created successfully
 
-            if (responseBody.equals("HTTP 201")) {
-                //Task is created successfully
-
-            } else if (responseBody.equals("HTTP 404 ")) {
-                // Title not unique
+                } else if (responseCode.toString() == "404") {
+                    // Title not unique
+                }
+            } catch (IOException | JSONException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException | JSONException e) {
-            throw new RuntimeException(e);
         }
 
-
-    }
 }
