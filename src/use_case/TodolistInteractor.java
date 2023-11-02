@@ -6,50 +6,34 @@ import org.json.JSONObject;
 import java.io.IOException;
 
 public class TodolistInteractor implements TodolistInputBoundary {
-
-    public void creatTodoList(TodolistInputData todolistInputData) {
-        String task_name = todolistInputData.getTask_name();
-        String description = todolistInputData.getDescription();
-        String date = todolistInputData.getDeadline();
+    private static final String app_id = "3e1540e3";
+    private static final String app_key = "11c5a456d1c9fd43e0e1166d3fef7d53";
 
 
-        //RequestBody body = RequestBody.create(mediaType, "{\n\t\"description\": \"reading book\"\n}");
-        // {\n\t\"Title\": \"" + task_name + "\",\n\t\"Description\": \""+ description+"\"," +
-        //                        "\n\t\"DueDate\": \""+ date +"\" \n}");
-
-
+    public void creatTodoList(TodolistInputData ingredientInputData) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        MediaType mediaType = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(mediaType, "{\n\t\"description\": \"reading book\"\n}");
+        String ingr = ingredientInputData.getIngredient();
         Request request = new Request.Builder()
-                .url("https://api-nodejs-todolist.herokuapp.com/task")
-                .method("POST", body)
-                .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGRjY2JlYzZiNTVkYTAwMTc1OTcyMmMiLCJpYXQiOjE1NzQ3NTE2ODh9.GPbsl9FLX4VrsGVErodiXypjuz1us4tfD0jwg2_UrzY")
-                .addHeader("Content-Type", "application/json")
+                .url("https://api.edamam.com/api/nutrition-data")
+                .addHeader("app_id", app_id)
+                .addHeader("app_key", app_key)
+                .addHeader("ingr", ingr)
                 .build();
-
         try {
             Response response = client.newCall(request).execute();
             System.out.println(response);
             JSONObject responseBody = new JSONObject(response.body().string());
-            System.out.println(responseBody);
 
-            if (responseBody.equals("HTTP 201")) {
+            if (responseBody.getInt("status_code") == 200) {
                 //Task is created successfully
 
-            } else if (responseBody.equals("HTTP 409 ")) {
+            } else if (responseBody.getInt("status_code") == 404) {
                 // Title not unique
             }
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-
-//        {
-//	"Title": "Create API Documentation",
-//	"Description": "The document will be used as a reference",
-//	"DueDate": "2020-05-15"
-//}
     }
 }
 
