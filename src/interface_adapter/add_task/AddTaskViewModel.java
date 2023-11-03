@@ -14,8 +14,8 @@ public class AddTaskViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public AddTaskViewModel(String viewName) {
-        super(viewName);
+    public AddTaskViewModel() {
+        super("add task");
     }
 
     @Override

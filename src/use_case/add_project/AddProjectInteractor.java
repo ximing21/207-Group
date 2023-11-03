@@ -21,8 +21,6 @@ public class AddProjectInteractor implements AddProjectInputBoundary {
 
             AddProjectOutputData addProjectOutputData = new AddProjectOutputData(name);
             presenter.prepareSuccessView(addProjectOutputData);
-
-
         }
     }
 }

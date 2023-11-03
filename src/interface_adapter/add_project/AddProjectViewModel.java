@@ -8,12 +8,14 @@ import java.beans.PropertyChangeSupport;
 public class AddProjectViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Add Project View";
     public static final String ADD_PROJECT_BUTTON_LABEL = "Add Project";
+    public static final String PROJECT_NAME_LABEL = "Choose project name:";
     private AddProjectState state = new AddProjectState();
+
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public AddProjectViewModel(String viewName) {
-        super(viewName);
+    public AddProjectViewModel() {
+        super("add project");
     }
 
     @Override
@@ -25,4 +27,7 @@ public class AddProjectViewModel extends ViewModel {
         support.addPropertyChangeListener(listener);
     }
      public AddProjectState getState() {return state;}
+     public void setState(AddProjectState state) {
+        this.state = state;
+    }
 }
