@@ -30,7 +30,7 @@ Our team is considering developing a time management application focusing on min
 * Total productive hours (Rounds of Pomodoro technique).
 
 ## API Documentation
-[API Documentation](http://api.nstack.in/)
+[API Documentation](https://developer.todoist.com/rest/v2/?shell#overview)
 
 We are currently exploring potential APIs for integration. Once selected, we will provide the relevant API documentation.
 
