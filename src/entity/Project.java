@@ -7,10 +7,10 @@ public class Project {
     private String color;
     private Boolean is_favorite;
 
-    public Project(String name, String color, Boolean is_favourite) {
+    public Project(String name, String color, Boolean is_favorite) {
         this.name = name;
         this.color = color;
-        this.is_favorite = is_favourite;
+        this.is_favorite = is_favorite;
     }
 
     public static ProjectBuilder builder() {
