@@ -5,12 +5,12 @@ import java.sql.DriverPropertyInfo;
 public class Project {
     private String name;
     private String color;
-    private Boolean is_favourite;
+    private Boolean is_favorite;
 
     public Project(String name, String color, Boolean is_favourite) {
         this.name = name;
         this.color = color;
-        this.is_favourite = is_favourite;
+        this.is_favorite = is_favourite;
     }
 
     public static ProjectBuilder builder() {
@@ -24,7 +24,7 @@ public class Project {
     public static  class ProjectBuilder {
         private String name;
         private String color;
-        private Boolean is_favourite;
+        private Boolean is_favorite;
 
         public ProjectBuilder name(String name) {
             this.name = name;
@@ -36,13 +36,13 @@ public class Project {
             return this;
         }
 
-        public ProjectBuilder is_favourite(Boolean is_favourite) {
-            this.is_favourite = is_favourite;
+        public ProjectBuilder is_favorite(Boolean is_favorite) {
+            this.is_favorite = is_favorite;
             return this;
         }
 
         public Project build() {
-            return new Project(name, color, is_favourite);
+            return new Project(name, color, is_favorite);
         }
     }
 }

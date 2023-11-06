@@ -69,7 +69,7 @@ public class TodoistDB implements TodolistDB, AddProjectDataAccessInterface {
                     Project project = Project.builder()
                             .name(element.getString("name"))
                             .color(element.getString("color"))
-                            .is_favourite(element.getBoolean("is_favourite"))
+                            .is_favorite(element.getBoolean("is_favorite"))
                             .build();
                     projects[i] = project;
                 }
