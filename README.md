@@ -34,8 +34,10 @@ Our team is considering developing a time management application focusing on min
 
 We are currently exploring potential APIs for integration. Once selected, we will provide the relevant API documentation.
 
-## Screenshot of API
-![image](https://github.com/ximing21/207-Group/assets/66059161/63f91c8f-d78b-47ec-b403-13771541f85e)
+## Screenshot of API:
+![WX20231106-下午23038@2x](https://github.com/justLxy/Todolist-Project/assets/66059161/f5c87ebe-c312-43ac-a86d-edeb76cb2296)
+
+
 
 
 ## Example Output (Java Code)
