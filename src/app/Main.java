@@ -3,15 +3,15 @@ package app;
 import api.TodoistDB;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_project.AddProjectViewModel;
-import interface_adapter.add_task.AddTaskViewModel;
+import interface_adapter.added_project.AddedProjectViewModel;
 import view.AddProjectView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class Main {
+
     public static void main(String[] args) {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
@@ -19,8 +19,6 @@ public class Main {
         // The main application window.
         JFrame application = new JFrame("Deadline Defenders");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-  //TODO:
-        application.setSize(400, 300);
 
         CardLayout cardLayout = new CardLayout();
 
@@ -37,14 +35,13 @@ public class Main {
         // results from the use case. The ViewModels are observable, and will
         // be observed by the Views.
         AddProjectViewModel addProjectViewModel = new AddProjectViewModel();
-        AddTaskViewModel addTaskViewModel = new AddTaskViewModel();
+        AddedProjectViewModel addedProjectViewModel = new AddedProjectViewModel();
 
-//TODO:
         TodoistDB userDataAccessObject;
         userDataAccessObject = new TodoistDB();
 
         AddProjectView addProjectView =
-                AddProjectUseCaseFactory.create(viewManagerModel, addTaskViewModel, addProjectViewModel,
+                AddProjectUseCaseFactory.create(viewManagerModel, addedProjectViewModel, addProjectViewModel,
                         userDataAccessObject);
         views.add(addProjectView, addProjectView.viewName);
 
@@ -54,5 +51,4 @@ public class Main {
         application.pack();
         application.setVisible(true);
     }
-
 }
