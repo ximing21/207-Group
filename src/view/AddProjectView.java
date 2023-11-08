@@ -46,7 +46,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         getProject = new JButton(AddProjectViewModel.GET_PROJECT_BUTTON_LABEL);
         buttons.add(addProject);
         buttons.add(getProject);
-
+        AddProjectView parent = this;
         addProject.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -54,8 +54,11 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                             AddProjectState currentState = addProjectViewModel.getState();
                             addProjectController.execute(
                                     currentState.getProject_name()
+
                             );
+//                            JOptionPane.showMessageDialog(parent, currentState.getProject_name() +"successfully created");
                         }
+
                     }
                 }
         );
@@ -95,16 +98,16 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object state = evt.getNewValue();
+        System.out.println(state instanceof AddProjectState);
         if (state instanceof AddProjectState) {
             AddProjectState addProjectState = (AddProjectState) state;
             if (addProjectState.getProject_nameError() != null) {
                 JOptionPane.showMessageDialog(this, addProjectState.getProject_nameError());
+        }
         } else if (state instanceof AddedProjectState) {
-                AddedProjectState addedProjectState = (AddedProjectState) state;
-                JOptionPane.showMessageDialog(this, addedProjectState.getProjectname() + "successfully created");
-            }
-
-
+            System.out.println("here");
+            AddedProjectState addedProjectState = (AddedProjectState) state;
+            JOptionPane.showMessageDialog(this, addedProjectState.getProjectname() + " successfully created");
         }
     }
 }
