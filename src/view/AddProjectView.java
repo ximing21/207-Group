@@ -105,7 +105,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                 JOptionPane.showMessageDialog(this, addProjectState.getProject_nameError());
         }
         } else if (state instanceof AddedProjectState) {
-            System.out.println("here");
             AddedProjectState addedProjectState = (AddedProjectState) state;
             JOptionPane.showMessageDialog(this, addedProjectState.getProjectname() + " successfully created");
         }
