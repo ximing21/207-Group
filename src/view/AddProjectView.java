@@ -98,7 +98,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object state = evt.getNewValue();
-        System.out.println(state instanceof AddProjectState);
         if (state instanceof AddProjectState) {
             AddProjectState addProjectState = (AddProjectState) state;
             if (addProjectState.getProject_nameError() != null) {
