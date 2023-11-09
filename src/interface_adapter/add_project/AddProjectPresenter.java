@@ -3,30 +3,40 @@ package interface_adapter.add_project;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_task.AddTaskState;
 import interface_adapter.add_task.AddTaskViewModel;
+import interface_adapter.added_project.AddedProjectState;
+import interface_adapter.added_project.AddedProjectViewModel;
 import use_case.add_project.AddProjectOutputBoundary;
 import use_case.add_project.AddProjectOutputData;
 
 public class AddProjectPresenter implements AddProjectOutputBoundary {
     private final AddProjectViewModel addProjectViewModel;
-    private final AddTaskViewModel addTaskViewModel;
+//    private final AddTaskViewModel addTaskViewModel;
+    private final AddedProjectViewModel addedProjectViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public AddProjectPresenter(AddProjectViewModel addProjectViewModel, AddTaskViewModel addTaskViewModel, ViewManagerModel viewManagerModel) {
+
+    public AddProjectPresenter(AddProjectViewModel addProjectViewModel, AddedProjectViewModel addedProjectViewModel, ViewManagerModel viewManagerModel) {
         this.addProjectViewModel = addProjectViewModel;
-        this.addTaskViewModel = addTaskViewModel;
+        this.addedProjectViewModel = addedProjectViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
     public void prepareSuccessView(AddProjectOutputData response) {
-        // On success, switch to add task view
-        AddTaskState addTaskState = addTaskViewModel.getState();
-        addTaskState.setProject_name(response.getName());
-        this.addTaskViewModel.setState(addTaskState);
-        addTaskViewModel.firePropertyChanged();
+        // On success, a message window pops up saying the project is successfully created
+        AddedProjectState addedProjectState = addedProjectViewModel.getState();
+        addedProjectState.setProjectname(response.getName());
+        this.addedProjectViewModel.setState(addedProjectState);
+        addedProjectViewModel.firePropertyChanged();
 
-        viewManagerModel.setActiveView(addTaskViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+
+//        AddTaskState addTaskState = addTaskViewModel.getState();
+//        addTaskState.setProject_name(response.getName());
+//        this.addTaskViewModel.setState(addTaskState);
+//        addTaskViewModel.firePropertyChanged();
+
+//        viewManagerModel.setActiveView(addTaskViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
     }
 
     @Override
