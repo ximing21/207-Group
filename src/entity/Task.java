@@ -1,46 +1,62 @@
 package entity;
 
-import java.time.LocalDateTime;
-
-public class Task implements TaskInterface{
+public class Task{
     private String taskName;
-    private LocalDateTime deadline;
-    private String priority;
+//    private String priority;
     private Boolean isCompleted;
-    private LocalDateTime reminderTime;
+    private final String projectId;
 
 
-    public Task(String taskName, LocalDateTime deadline, String priority,
-                Boolean isCompleted, LocalDateTime reminderTime) {
+    public Task(String taskName, Boolean isCompleted, String project_id) {
         this.taskName = taskName;
-        this.deadline = deadline;
-        this.priority = priority;
+//        this.priority = priority;
         this.isCompleted = isCompleted;
-        this.reminderTime = reminderTime;
+        this.projectId = project_id;
     }
 
-    @Override
+    public static TaskBuilder builder() {return new TaskBuilder();}
+
+    public static class TaskBuilder {
+        private String taskName;
+        private Boolean isCompleted;
+        private String projectId;
+
+        TaskBuilder() {
+        }
+
+        public TaskBuilder taskName(String name) {
+            this.taskName = name;
+            return this;
+        }
+
+        public TaskBuilder isCompleted(Boolean isCompleted) {
+            this.isCompleted = isCompleted;
+            return this;
+        }
+
+        public TaskBuilder projectId(String project_id) {
+            this.projectId = project_id;
+            return this;
+        }
+
+        public Task build() {return new Task(taskName, isCompleted, projectId);}
+    }
+
     public String getName() {
         return taskName;
     }
 
-    @Override
-    public LocalDateTime getDeadline() {
-        return deadline;
-    }
 
-    @Override
-    public String getPriority() {
-        return priority;
-    }
-
-    @Override
+//    public String getPriority() {
+//        return priority;
+//    }
+//
+//
     public Boolean getIsCompleted() {
         return isCompleted;
     }
 
-    @Override
-    public LocalDateTime getReminderTime() {
-        return reminderTime;
+    public String getProjectId() {
+        return projectId;
     }
 }
