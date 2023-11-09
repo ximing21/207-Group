@@ -37,16 +37,22 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
 
         JLabel title = new JLabel(AddProjectViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Serif", Font.BOLD, 30));
+        title.setForeground(Color.darkGray);
 
         LabelTextPanel projectnameInfo = new LabelTextPanel(
                 new JLabel(AddProjectViewModel.PROJECT_NAME_LABEL), projectnameInputField);
 
         JPanel buttons = new JPanel();
+        Font font = new Font("SansSerif", Font.PLAIN,15);
         addProject = new JButton(AddProjectViewModel.ADD_PROJECT_BUTTON_LABEL);
+        addProject.setFont(font);
         getProject = new JButton(AddProjectViewModel.GET_PROJECT_BUTTON_LABEL);
+        getProject.setFont(font);
         buttons.add(addProject);
         buttons.add(getProject);
-        AddProjectView parent = this;
+
+//        AddProjectView parent = this;
         addProject.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -87,6 +93,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         this.add(title);
         this.add(projectnameInfo);
         this.add(buttons);
+        this.setBackground(Color.ORANGE);
 
     }
 
