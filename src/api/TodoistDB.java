@@ -42,6 +42,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                 String id = responseBody.getString("id");
                 String project_name = responseBody.getString("name");
                 all_projects.put(project_name, id);
+                System.out.println(all_projects);
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
@@ -133,9 +134,9 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
     public boolean existsByName(String name) {
-        if (all_projects.containsKey("name")) {
+        if (all_projects.containsKey(name)) {
             return true;
-        } return false;
+        }
+        else {return false;}
     }
-
 }
