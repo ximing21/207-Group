@@ -42,7 +42,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                 String id = responseBody.getString("id");
                 String project_name = responseBody.getString("name");
                 all_projects.put(project_name, id);
-                System.out.println(all_projects);
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
