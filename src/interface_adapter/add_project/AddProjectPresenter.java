@@ -28,15 +28,6 @@ public class AddProjectPresenter implements AddProjectOutputBoundary {
         addedProjectState.setProjectname(response.getName());
         this.addedProjectViewModel.setState(addedProjectState);
         addedProjectViewModel.firePropertyChanged();
-
-
-//        AddTaskState addTaskState = addTaskViewModel.getState();
-//        addTaskState.setProject_name(response.getName());
-//        this.addTaskViewModel.setState(addTaskState);
-//        addTaskViewModel.firePropertyChanged();
-
-//        viewManagerModel.setActiveView(addTaskViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
     }
 
     @Override
