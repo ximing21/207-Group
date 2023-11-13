@@ -10,6 +10,10 @@ import use_case.add_project.AddProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,6 +25,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
     private final Map<String,String> all_projects = new HashMap<>() {};
 
+    private HttpClient client;
 
     @Override
     public void createProject(String name) throws JSONException {
@@ -50,9 +55,13 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-
-    public Project updateProject() {
-        return null;
+    public void deleteProject(String projectId) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.todoist.com/rest/v2/projects/" + projectId))
+                .header("Authorization", "Bearer " + API_TOKEN)
+                .DELETE()
+                .build();
+        client.send(request, HttpResponse.BodyHandlers.discarding());
     }
 
 
@@ -86,10 +95,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-
-    public void createTask() {
-
-    }
 
 
     //Precondition: the project name provided exists
@@ -126,9 +131,24 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
+    public void addTask(Task task) throws Exception {
+        String requestBody = "{\"content\": \"" + task.getName() + "\", \"project_id\": \"" + task.getProjectId() + "\"}";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.todoist.com/rest/v2/tasks"))
+                .header("Authorization", "Bearer " + API_TOKEN)
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                .build();
+        client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
 
-    public void deleteTask() {
-
+    public void closeTask(String taskId) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.todoist.com/rest/v2/tasks/" + taskId + "/close"))
+                .header("Authorization", "Bearer " + API_TOKEN)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+        client.send(request, HttpResponse.BodyHandlers.discarding());
     }
 
     public boolean existsByName(String name) {
