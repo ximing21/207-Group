@@ -4,6 +4,7 @@ import api.TodoistDB;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectViewModel;
+import interface_adapter.get_all_projects.GetProjectViewModel;
 import okhttp3.*;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,13 +44,14 @@ public class Main {
         // be observed by the Views.
         AddProjectViewModel addProjectViewModel = new AddProjectViewModel();
         AddedProjectViewModel addedProjectViewModel = new AddedProjectViewModel();
+        GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
 
         TodoistDB userDataAccessObject;
         userDataAccessObject = new TodoistDB();
 
         AddProjectView addProjectView =
                 AddProjectUseCaseFactory.create(viewManagerModel, addedProjectViewModel, addProjectViewModel,
-                        userDataAccessObject);
+                        userDataAccessObject, getProjectViewModel);
         views.add(addProjectView, addProjectView.viewName);
 
         viewManagerModel.setActiveView(addProjectView.viewName);
