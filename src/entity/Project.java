@@ -1,16 +1,12 @@
 package entity;
 
 public class Project {
-    private String name;
-    private Boolean is_favorite;
+    private String ProjectId;
+    private String ProjectName;
 
-
-    private final String id;
-
-    public Project(String name, Boolean is_favorite, String id) {
-        this.name = name;
-        this.is_favorite = is_favorite;
-        this.id = id;
+    public Project(String ProjectId, String ProjectName) {
+        this.ProjectId = ProjectId;
+        this.ProjectName = ProjectName;
     }
 
     public static ProjectBuilder builder() {
@@ -18,37 +14,32 @@ public class Project {
     }
 
     public static  class ProjectBuilder {
-        private String name;
-        private Boolean is_favorite;
-        private String id;
+        private String ProjectId;
+        private String ProjectName;
+
 
         ProjectBuilder(){}
 
-        public ProjectBuilder name(String name) {
-            this.name = name;
+        public ProjectBuilder ProjectName(String ProjectName) {
+            this.ProjectName = ProjectName;
             return this;
         }
 
-
-        public ProjectBuilder is_favorite(Boolean is_favorite) {
-            this.is_favorite = is_favorite;
-            return this;
-        }
-
-        public ProjectBuilder id(String id) {
-            this.id = id;
+        public ProjectBuilder ProjectId(String ProjectId) {
+            this.ProjectId = ProjectId;
             return this;
         }
 
         public Project build() {
-            return new Project(name, is_favorite, id);}
+            return new Project(ProjectId, ProjectName);}
+    }
+
+    public String getName() {
+        return this.ProjectName;
     }
 
     public String getId() {
-        return id;
-    }
-    public String getName() {
-        return name;
+        return this.ProjectId;
     }
 
 

@@ -72,9 +72,8 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                 for (int i = 0; i < responseBody.length(); i++) {
                     JSONObject element = responseBody.getJSONObject(i);
                     Project project = Project.builder()
-                            .name(element.getString("name"))
-                            .is_favorite(element.getBoolean("is_favorite"))
-                            .id(element.getString("id"))
+                            .ProjectId(element.getString("id"))
+                            .ProjectName(element.getString("name"))
                             .build();
                     projects[i] = project;
                 }
@@ -112,9 +111,9 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                     JSONObject element = responseBody.getJSONObject(i);
                     if (element.getString("project_id") == id) {
                         Task task = Task.builder()
-                                .taskName(element.getString("content"))
-                                .isCompleted(element.getBoolean("is_completed"))
-                                .projectId(element.getString("project_id"))
+                                .TaskId(element.getString("id"))
+                                .TaskName(element.getString("content"))
+                                .ProjectId(element.getString("project_id"))
                                 .build();
                         tasks[i] = task;
                     }
