@@ -30,9 +30,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
     private final JButton getProject;
     private final AddedProjectViewModel addedProjectViewModel;
 
-
-
-
     public AddProjectView(AddProjectViewModel addProjectViewModel, AddProjectController addProjectController, AddedProjectViewModel addedProjectViewModel) {
         this.addProjectViewModel = addProjectViewModel;
         this.addProjectController = addProjectController;
@@ -51,14 +48,18 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         LabelTextPanel projectnameInfo = new LabelTextPanel(
                 new JLabel(AddProjectViewModel.PROJECT_NAME_LABEL), projectnameInputField);
 
-        JPanel buttons = new JPanel();
+        JPanel inputPanel = new JPanel();
         Font font = new Font("SansSerif", Font.PLAIN,15);
         addProject = new JButton(AddProjectViewModel.ADD_PROJECT_BUTTON_LABEL);
         addProject.setFont(font);
+
+        inputPanel.add(projectnameInfo);
+        inputPanel.add(addProject, BorderLayout.AFTER_LINE_ENDS);
+
+        JPanel button = new JPanel();
         getProject = new JButton(AddProjectViewModel.GET_PROJECT_BUTTON_LABEL);
         getProject.setFont(font);
-        buttons.add(addProject);
-        buttons.add(getProject);
+        button.add(getProject);
 
         getProject.addActionListener(
                 new ActionListener() {
@@ -121,10 +122,10 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         this.setPreferredSize(new Dimension(850, 300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(projectnameInfo);
+        this.add(inputPanel);
         this.setBackground(Color.ORANGE);
         this.add(scrollPane, BorderLayout.CENTER);
-        this.add(buttons);
+        this.add(button);
     }
 
 
