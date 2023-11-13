@@ -24,7 +24,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         return API_TOKEN;
     }
     private final Map<String,String> all_projects = new HashMap<>() {};
-
     private HttpClient client;
 
     @Override
