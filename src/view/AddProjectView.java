@@ -81,9 +81,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                                     addProjectController.execute(
                                             currentState.getProject_name()
                                     );
-
-                                    String projectNameWithCount = currentState.getProject_name() + " (0)";
-                                    listModel.addElement(projectNameWithCount);
                                     projectnameInputField.setText("");
 
                                 } catch (Exception ex) {
@@ -145,6 +142,8 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         }
         } else if (state instanceof AddedProjectState) {
             AddedProjectState addedProjectState = (AddedProjectState) state;
+            String projectNameWithCount = addedProjectState.getProjectname() + " (0)";
+            listModel.addElement(projectNameWithCount);
             JOptionPane.showMessageDialog(this, addedProjectState.getProjectname() + " successfully created");
         }
     }
