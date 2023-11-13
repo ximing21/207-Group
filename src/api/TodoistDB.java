@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.add_project.AddProjectDataAccessInterface;
+import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
 
 import java.io.IOException;
@@ -17,13 +18,14 @@ import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface {
+public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static String getApiToken() {
         return API_TOKEN;
     }
     private final Map<String,String> all_projects = new HashMap<>() {};
+
     private HttpClient client;
 
     @Override
@@ -65,8 +67,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
 
 
     public Project[] getProject() {
-        OkHttpClient client = new OkHttpClient().newBuilder()
-                .build();
+        OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("https://api.todoist.com/rest/v2/projects")
                 .addHeader("Authorization", API_TOKEN)
@@ -75,24 +76,50 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         try {
             Response response = client.newCall(request).execute();
             JSONArray responseBody = new JSONArray(response.body().string());
-            if (response.code() == 200) {
-                Project[] projects = new Project[responseBody.length()];
-                for (int i = 0; i < responseBody.length(); i++) {
-                    JSONObject element = responseBody.getJSONObject(i);
-                    Project project = Project.builder()
-                            .ProjectId(element.getString("id"))
-                            .ProjectName(element.getString("name"))
-                            .build();
-                    projects[i] = project;
-                }
-                return projects;
-            } else {
-                throw new RuntimeException("Error");
+            Project[] projects = new Project[responseBody.length()];
+            for (int i = 0; i < responseBody.length(); i++) {
+                JSONObject projectJson = responseBody.getJSONObject(i);
+                String projectId = projectJson.getString("id");
+
+                // 获取与此项目关联的任务数量
+                int taskCount = getTasksCountForProject(projectId);
+
+                Project project = Project.builder()
+                        .ProjectId(projectId)
+                        .ProjectName(projectJson.getString("name"))
+                        .TaskCount(taskCount) // 设置任务数量
+                        .build();
+                projects[i] = project;
             }
+            return projects;
         } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
     }
+
+
+    private int getTasksCountForProject(String projectId) {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.todoist.com/rest/v2/tasks?project_id=" + projectId)
+                .addHeader("Authorization", API_TOKEN)
+                .addHeader("Content-Type", "application/json")
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            if (!response.isSuccessful()) {
+                throw new IOException("Unexpected code " + response);
+            }
+
+            String responseBodyString = response.body().string();
+            JSONArray tasksArray = new JSONArray(responseBodyString);
+            return tasksArray.length(); // 返回任务数量
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
 
 
 

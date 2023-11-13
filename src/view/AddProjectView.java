@@ -1,11 +1,15 @@
 package view;
 
 import entity.Project;
+import entity.Task;
 import interface_adapter.add_project.AddProjectController;
 import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectState;
 import interface_adapter.added_project.AddedProjectViewModel;
+import interface_adapter.get_all_projects.GetProjectController;
+import interface_adapter.get_all_projects.GetProjectState;
+import interface_adapter.get_all_projects.GetProjectViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,25 +19,35 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 public class AddProjectView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Add Project";
+    private final GetProjectViewModel getProjectViewModel;
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
     private final AddProjectViewModel addProjectViewModel;
     private final JTextField projectnameInputField = new JTextField(15);
     private final AddProjectController addProjectController;
+    private final GetProjectController getProjectController;
     private final JButton addProject;
     private final JButton getProject;
     private final AddedProjectViewModel addedProjectViewModel;
 
-    public AddProjectView(AddProjectViewModel addProjectViewModel, AddProjectController addProjectController, AddedProjectViewModel addedProjectViewModel) {
+    public AddProjectView(AddProjectViewModel addProjectViewModel, AddProjectController addProjectController, AddedProjectViewModel addedProjectViewModel, GetProjectViewModel getProjectViewModel, GetProjectController getProjectController) {
         this.addProjectViewModel = addProjectViewModel;
         this.addProjectController = addProjectController;
         this.addedProjectViewModel = addedProjectViewModel;
+
+        this.getProjectController = getProjectController;
+        this.getProjectViewModel = getProjectViewModel;
+
+
+        getProjectViewModel.addPropertyChangeListener(this);
         addProjectViewModel.addPropertyChangeListener(this);
         addedProjectViewModel.addPropertyChangeListener(this);
 
@@ -66,6 +80,8 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(getProject)) {
+                            GetProjectState currentState = getProjectViewModel.getState();
+                            getProjectController.execute();
                         }
                     }
                 }
@@ -83,6 +99,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                                             currentState.getProject_name()
                                     );
                                     projectnameInputField.setText("");
+
 
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
@@ -140,12 +157,20 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
             AddProjectState addProjectState = (AddProjectState) state;
             if (addProjectState.getProject_nameError() != null) {
                 JOptionPane.showMessageDialog(this, addProjectState.getProject_nameError());
-        }
+            }
         } else if (state instanceof AddedProjectState) {
             AddedProjectState addedProjectState = (AddedProjectState) state;
-            String projectNameWithCount = addedProjectState.getProjectname() + " (0)";
+            String projectNameWithCount = addedProjectState.getProjectname() + " (0 tasks)";
             listModel.addElement(projectNameWithCount);
             JOptionPane.showMessageDialog(this, addedProjectState.getProjectname() + " successfully created");
+        } else if (state instanceof GetProjectState) {
+            GetProjectState getProjectState = (GetProjectState) state;
+            List<Project> projects = List.of(getProjectState.getProjects());
+            listModel.clear();
+            for (Project project : projects) {
+                String displayText = project.getName() + " (" + project.getTaskCount() + " tasks)";
+                listModel.addElement(displayText);
+            }
         }
     }
 }
