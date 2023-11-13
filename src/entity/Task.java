@@ -1,62 +1,60 @@
 package entity;
 
 public class Task{
-    private String taskName;
-//    private String priority;
-    private Boolean isCompleted;
-    private final String projectId;
+    private String TaskId;
+    private String TaskName;
+    private String ProjectId;
 
-
-    public Task(String taskName, Boolean isCompleted, String project_id) {
-        this.taskName = taskName;
-//        this.priority = priority;
-        this.isCompleted = isCompleted;
-        this.projectId = project_id;
+    public Task(String TaskName, String ProjectId) {
+        this.TaskName = TaskName;
+        this.ProjectId = ProjectId;
+    }
+    public Task(String TaskId, String TaskName, String ProjectId) {
+        this.TaskId = TaskId;
+        this.TaskName = TaskName;
+        this.ProjectId = ProjectId;
     }
 
     public static TaskBuilder builder() {return new TaskBuilder();}
 
     public static class TaskBuilder {
-        private String taskName;
-        private Boolean isCompleted;
-        private String projectId;
+        private String TaskId;
+        private String TaskName;
+        private String ProjectId;
 
         TaskBuilder() {
         }
 
-        public TaskBuilder taskName(String name) {
-            this.taskName = name;
+        public TaskBuilder TaskName(String TaskName) {
+            this.TaskName = TaskName;
             return this;
         }
 
-        public TaskBuilder isCompleted(Boolean isCompleted) {
-            this.isCompleted = isCompleted;
+        public TaskBuilder ProjectId(String ProjectId) {
+            this.ProjectId = ProjectId;
             return this;
         }
 
-        public TaskBuilder projectId(String project_id) {
-            this.projectId = project_id;
+        public TaskBuilder TaskId(String TaskId) {
+            this.TaskId = TaskId;
             return this;
         }
 
-        public Task build() {return new Task(taskName, isCompleted, projectId);}
+        public Task build() {
+            return new Task(TaskId, TaskName, ProjectId);
+        }
+
+    }
+
+    public String getTaskId() {
+        return TaskId;
     }
 
     public String getName() {
-        return taskName;
-    }
-
-
-//    public String getPriority() {
-//        return priority;
-//    }
-//
-//
-    public Boolean getIsCompleted() {
-        return isCompleted;
+        return TaskName;
     }
 
     public String getProjectId() {
-        return projectId;
+        return ProjectId;
     }
 }
