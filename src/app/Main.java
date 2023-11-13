@@ -19,12 +19,12 @@ import java.util.Map;
 public class Main {
 
     public static void main(String[] args) {
-
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
         JFrame application = new JFrame("Deadline Defenders");
+        application.setLayout(new BorderLayout());
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();

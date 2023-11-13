@@ -133,9 +133,9 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
     public boolean existsByName(String name) {
-        if (all_projects.containsKey("name")) {
+        if (all_projects.containsKey(name)) {
             return true;
-        } return false;
+        }
+        else {return false;}
     }
-
 }
