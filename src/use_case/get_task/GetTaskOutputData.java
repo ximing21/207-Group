@@ -2,12 +2,16 @@ package use_case.get_task;
 
 import entity.Task;
 
-public class GetTaskOutputData {
-    private final Task[] tasks;
+import java.util.ArrayList;
 
-    public GetTaskOutputData(Task[] tasks) {
+public class GetTaskOutputData {
+    private final ArrayList<Task> tasks;
+
+    public GetTaskOutputData(ArrayList<Task> tasks) {
         this.tasks= tasks;
     }
 
-
+    public ArrayList<Task> getTasks() {
+        return tasks;
+    }
 }

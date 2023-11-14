@@ -1,13 +1,13 @@
 package entity;
 
 public class Project {
-    private String ProjectId;
-    private String ProjectName;
+    private String projectId;
+    private String projectName;
     private int taskCount;
 
-    public Project(String ProjectId, String ProjectName, int taskCount) {
-        this.ProjectId = ProjectId;
-        this.ProjectName = ProjectName;
+    public Project(String projectId, String projectName, int taskCount) {
+        this.projectId = projectId;
+        this.projectName = projectName;
         this.taskCount = taskCount;
     }
 
@@ -16,25 +16,25 @@ public class Project {
     }
 
     public static  class ProjectBuilder {
-        private String ProjectId;
-        private String ProjectName;
+        private String projectId;
+        private String projectName;
         private int taskCount;
 
 
         ProjectBuilder(){}
 
-        public ProjectBuilder ProjectName(String ProjectName) {
-            this.ProjectName = ProjectName;
+        public ProjectBuilder ProjectName(String projectName) {
+            this.projectName = projectName;
             return this;
         }
 
-        public ProjectBuilder ProjectId(String ProjectId) {
-            this.ProjectId = ProjectId;
+        public ProjectBuilder ProjectId(String projectId) {
+            this.projectId = projectId;
             return this;
         }
 
         public Project build() {
-            return new Project(ProjectId, ProjectName, taskCount);}
+            return new Project(projectId, projectName, taskCount);}
 
         public ProjectBuilder TaskCount(int taskCount) {
             this.taskCount = taskCount;
@@ -43,11 +43,11 @@ public class Project {
     }
 
     public String getName() {
-        return this.ProjectName;
+        return this.projectName;
     }
 
     public String getId() {
-        return this.ProjectId;
+        return this.projectId;
     }
 
     public int getTaskCount() {
