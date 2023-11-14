@@ -1,60 +1,73 @@
 package entity;
 
 public class Task{
-    private String TaskId;
-    private String TaskName;
-    private String ProjectId;
+    private String taskId;
+    private String taskName;
+    private String projectId;
+    private Boolean isCompleted;
+    private String deadline;
 
-    public Task(String TaskName, String ProjectId) {
-        this.TaskName = TaskName;
-        this.ProjectId = ProjectId;
+    public Task(String taskId, String taskName, String projectId, Boolean isCompleted) {
+        this.taskId = taskId;
+        this.taskName = taskName;
+        this.projectId = projectId;
+        this.isCompleted = isCompleted;
     }
-    public Task(String TaskId, String TaskName, String ProjectId) {
-        this.TaskId = TaskId;
-        this.TaskName = TaskName;
-        this.ProjectId = ProjectId;
-    }
+
 
     public static TaskBuilder builder() {return new TaskBuilder();}
 
     public static class TaskBuilder {
-        private String TaskId;
-        private String TaskName;
-        private String ProjectId;
+        private String taskId;
+        private String taskName;
+        private String projectId;
+        private Boolean isCompleted;
+//        private String deadline;
 
         TaskBuilder() {
         }
 
-        public TaskBuilder TaskName(String TaskName) {
-            this.TaskName = TaskName;
+        public TaskBuilder TaskName(String taskName) {
+            this.taskName = taskName;
             return this;
         }
 
-        public TaskBuilder ProjectId(String ProjectId) {
-            this.ProjectId = ProjectId;
+        public TaskBuilder ProjectId(String projectId) {
+            this.projectId = projectId;
             return this;
         }
 
-        public TaskBuilder TaskId(String TaskId) {
-            this.TaskId = TaskId;
+        public TaskBuilder TaskId(String taskId) {
+            this.taskId = taskId;
             return this;
         }
+
+        public TaskBuilder IsCompleted(Boolean isCompleted) {
+            this.isCompleted = isCompleted;
+            return this;
+        }
+
+//        public TaskBuilder Deadline(String deadline) {
+//            this.deadline = deadline;
+//            return this;
+//        }
+
 
         public Task build() {
-            return new Task(TaskId, TaskName, ProjectId);
+            return new Task(taskId, taskName, projectId, isCompleted);
         }
 
     }
 
     public String getTaskId() {
-        return TaskId;
+        return taskId;
     }
 
-    public String getName() {
-        return TaskName;
+    public String getTaskName() {
+        return taskName;
     }
 
     public String getProjectId() {
-        return ProjectId;
+        return projectId;
     }
 }

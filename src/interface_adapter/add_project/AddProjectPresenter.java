@@ -10,7 +10,6 @@ import use_case.add_project.AddProjectOutputData;
 
 public class AddProjectPresenter implements AddProjectOutputBoundary {
     private final AddProjectViewModel addProjectViewModel;
-//    private final AddTaskViewModel addTaskViewModel;
     private final AddedProjectViewModel addedProjectViewModel;
     private final ViewManagerModel viewManagerModel;
 

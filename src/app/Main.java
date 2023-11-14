@@ -5,17 +5,14 @@ import interface_adapter.ViewManagerModel;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectViewModel;
 import interface_adapter.get_all_projects.GetProjectViewModel;
-import okhttp3.*;
-import org.json.JSONException;
-import org.json.JSONObject;
+import interface_adapter.get_task.GetTaskViewModel;
 import view.AddProjectView;
+import view.GetTaskView;
 import view.ViewManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class Main {
 
@@ -45,16 +42,21 @@ public class Main {
         AddProjectViewModel addProjectViewModel = new AddProjectViewModel();
         AddedProjectViewModel addedProjectViewModel = new AddedProjectViewModel();
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
+        GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
 
         TodoistDB userDataAccessObject;
         userDataAccessObject = new TodoistDB();
 
         AddProjectView addProjectView =
                 AddProjectUseCaseFactory.create(viewManagerModel, addedProjectViewModel, addProjectViewModel,
-                        userDataAccessObject, getProjectViewModel);
+                        userDataAccessObject, getProjectViewModel, getTaskViewModel);
         views.add(addProjectView, addProjectView.viewName);
 
+        GetTaskView getTaskView = GetTaskUseCaseFactory.create(getTaskViewModel);
+        views.add(getTaskView, getTaskView.viewName);
+
         viewManagerModel.setActiveView(addProjectView.viewName);
+//        viewManagerModel.setActiveView(getTaskView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();
