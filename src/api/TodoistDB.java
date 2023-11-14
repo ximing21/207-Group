@@ -2,6 +2,7 @@ package api;
 
 import entity.Project;
 import entity.Task;
+import kotlin.Pair;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -127,7 +128,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
 
 
     //Precondition: the project name provided exists
-    public ArrayList<Task> getTasks(String name) {
+    public Pair<String, ArrayList<Task>> getTasks(String name) {
         this.getProject();
         String id = all_projects.get(name);
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -152,10 +153,11 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                                 .IsCompleted(element.getBoolean("is_completed"))
 //                                .Deadline(element.getJSONObject("due").getString("date"))
                                 .build();
-                        System.out.println(task.getTaskName());
                         tasks.add(task);
                     }
-                } return tasks;
+                }
+                Pair<String, ArrayList<Task>> result = new Pair<>(name, tasks);
+                return result;
             } else {
                 throw new RuntimeException("Error");
             }

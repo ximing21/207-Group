@@ -25,7 +25,7 @@ public class AddedProjectViewModel extends ViewModel {
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public void firePropertyChanged() {
+    public void  firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
     }
 

@@ -1,11 +1,13 @@
 package use_case.get_task;
 
 import entity.Task;
+import kotlin.Pair;
 import use_case.add_project.AddProjectDataAccessInterface;
 import use_case.add_project.AddProjectOutputBoundary;
 import use_case.add_project.AddProjectOutputData;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class GetTaskInteractor implements GetTaskInputBoundary{
@@ -24,8 +26,10 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
             presenter.prepareFailView("Project does not exist.");
         } else {
             String name = getTaskInputData.getName();
-            ArrayList<Task> tasks= dataAccessObject.getTasks(name);
-            GetTaskOutputData getTaskOutputData = new GetTaskOutputData(tasks);
+            Pair<String, ArrayList<Task>> result = dataAccessObject.getTasks(name);
+//            ArrayList<Task> tasks= dataAccessObject.getTasks(name);
+//            ArrayList<Task> tasks= dataAccessObject.getTasks(name);
+            GetTaskOutputData getTaskOutputData = new GetTaskOutputData(result);
             presenter.prepareSuccessView(getTaskOutputData);
         }
 
