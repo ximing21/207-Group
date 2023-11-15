@@ -1,12 +1,10 @@
 package view;
 
 
-
-import entity.Project;
 import entity.Task;
-import interface_adapter.get_all_projects.GetProjectState;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
+import interface_adapter.switch_view.SwitchViewController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,22 +12,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.List;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
     private final GetTaskViewModel getTaskViewModel;
+    private final SwitchViewController switchViewController;
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
     private final JTextField taskNameInputField = new JTextField(15);
     private final JTextField deadlineInputField = new JTextField(10);
 
     private final JButton addTask;
+    private final JButton backToProjects;
 
 
 
-    public GetTaskView(GetTaskViewModel getTaskViewModel) {
+    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController) {
         this.getTaskViewModel = getTaskViewModel;
+        this.switchViewController = switchViewController;
 
         getTaskViewModel.addPropertyChangeListener(this);
 
@@ -50,6 +50,21 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         Font font = new Font("SansSerif", Font.PLAIN,15);
         addTask = new JButton(GetTaskViewModel.ADD_TASK_BUTTON_LABEL);
         addTask.setFont(font);
+        JPanel buttons = new JPanel();
+        backToProjects = new JButton((GetTaskViewModel.PROJECTS_BUTTON_LABEL));
+        backToProjects.setFont(font);
+        buttons.add(backToProjects);
+
+        backToProjects.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(backToProjects)) {
+                            switchViewController.execute();
+                        }
+                    }
+                }
+        );
+
 
         JPanel inputPanel = new JPanel();
         inputPanel.add(taskNameInfo);
@@ -57,18 +72,18 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         inputPanel.add(addTask, BorderLayout.AFTER_LINE_ENDS);
 
         JScrollPane scrollPane = new JScrollPane(projectList);
-        scrollPane.setPreferredSize(new Dimension(80,100));
+        scrollPane.setPreferredSize(new Dimension(80,150));
 
         this.setPreferredSize(new Dimension(850, 300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(inputPanel);
         this.add(scrollPane, BorderLayout.CENTER);
+        this.add(buttons);
         }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
     }
 
     @Override
