@@ -2,6 +2,7 @@ package view;
 
 
 import entity.Task;
+import interface_adapter.add_task.AddTaskController;
 import interface_adapter.close_task.CloseTaskController;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
@@ -31,7 +32,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
 
 
-    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController, CloseTaskController closeTaskController) {
+    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController, CloseTaskController closeTaskController, AddTaskController addTaskController) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
         this.closeTaskController = closeTaskController;

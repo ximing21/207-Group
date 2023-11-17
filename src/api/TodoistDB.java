@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.add_project.AddProjectDataAccessInterface;
+import use_case.add_task.AddTaskDataAccessInterface;
 import use_case.close_task.CloseTaskDataAccessInterface;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
@@ -21,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface {
+public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static String getApiToken() {
