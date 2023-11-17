@@ -52,11 +52,10 @@ public class Main {
                         userDataAccessObject, getProjectViewModel, getTaskViewModel);
         views.add(addProjectView, addProjectView.viewName);
 
-        GetTaskView getTaskView = GetTaskUseCaseFactory.create(getTaskViewModel);
+        GetTaskView getTaskView = GetTaskUseCaseFactory.create(getTaskViewModel,viewManagerModel, addProjectViewModel);
         views.add(getTaskView, getTaskView.viewName);
 
         viewManagerModel.setActiveView(addProjectView.viewName);
-//        viewManagerModel.setActiveView(getTaskView.viewName);
         viewManagerModel.firePropertyChanged();
 
         application.pack();

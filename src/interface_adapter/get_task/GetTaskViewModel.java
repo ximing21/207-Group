@@ -6,10 +6,11 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class GetTaskViewModel extends ViewModel {
-    public static String TITLE_LABEL;
+    public static String TITLE_LABEL = "?????";
     public static final String ADD_TASK_BUTTON_LABEL = "Add Task";
     public static final String TASK_NAME_LABEL = "Choose task name:";
     public static final String DEADLINE_LABEL = "Due date(YYYY-MM-DD):";
+    public static final String PROJECTS_BUTTON_LABEL = "Back to Projects";
     private GetTaskState state = new GetTaskState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
     public GetTaskViewModel() {super("get task");}

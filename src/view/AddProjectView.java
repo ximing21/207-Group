@@ -21,7 +21,7 @@ import java.util.List;
 
 
 public class AddProjectView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "Add Project";
+    public final String viewName = "add project";
     private final GetProjectViewModel getProjectViewModel;
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
