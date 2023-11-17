@@ -6,6 +6,7 @@ public class AddTaskState {
     private String project_name = "";
     private String project_nameError = null;
     private String task_name = "";
+    private String taskId = "";
     private String task_nameError = null;
 
 
@@ -13,6 +14,7 @@ public class AddTaskState {
         project_name = copy.project_name;
         project_nameError = copy.project_nameError;
         task_name = copy.task_name;
+        taskId = copy.taskId;
         task_nameError = copy.task_nameError;
     }
 
@@ -36,6 +38,9 @@ public class AddTaskState {
 
     public String getTask_name() {
         return task_name;
+    }
+    public String getTaskId() {
+        return taskId;
     }
 
     public void setTask_name(String task_name) {

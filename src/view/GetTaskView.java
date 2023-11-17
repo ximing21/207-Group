@@ -54,6 +54,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         this.addTaskViewModel = addTaskViewModel;
 
         getTaskViewModel.addPropertyChangeListener(this);
+        addTaskViewModel.addPropertyChangeListener(this);
 
         this.tasksArea = new JTextArea(10, 30);
         tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
@@ -156,20 +157,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             GetTaskState getTaskState = (GetTaskState) state;
 
             java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
-            tasks.sort(Comparator.comparing(Task::IsCompleted));
             tasksArea.removeAll();
             for (Task task : tasks) {
                 JCheckBox checkBox = new JCheckBox(task.getTaskName());
 
-                checkBox.setSelected(task.IsCompleted());
-                checkBox.setEnabled(!task.IsCompleted());
 
                 checkBox.addActionListener(e -> {
                     if (checkBox.isSelected()) {
                         try {
                             closeTaskController.execute(task.getTaskId());
-                            task.setCompleted(true);
-                            propertyChange(evt);
+                            checkBox.setEnabled(false);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
@@ -179,8 +176,19 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             }
         } else if (state instanceof AddTaskState) {
             AddTaskState addTaskState = (AddTaskState) state;
-            JCheckBox checkBox = new JCheckBox(addTaskState.getTask_name());
-            tasksArea.add(checkBox);
+            String newTaskName = addTaskState.getTask_name();
+            if (!newTaskName.isEmpty()) {
+                JCheckBox newTaskCheckBox = new JCheckBox(newTaskName);
+
+                newTaskCheckBox.addActionListener(e -> {
+                    if (newTaskCheckBox.isSelected()) {
+                        // Disable the checkbox
+                        newTaskCheckBox.setEnabled(false);
+                    }
+                });
+
+                tasksArea.add(newTaskCheckBox, 0);
+            }
         }
         tasksArea.revalidate();
         tasksArea.repaint();
