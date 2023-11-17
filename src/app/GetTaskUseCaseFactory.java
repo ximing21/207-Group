@@ -39,7 +39,7 @@ public class GetTaskUseCaseFactory {
         SwitchViewController switchViewController = switchViewControllerUseCase(viewManagerModel, addProjectViewModel);
         CloseTaskController closeTaskController = createCloseTaskUseCase(viewManagerModel, closeTaskViewModel, userDataAccessObject);
         AddTaskController addTaskController = createaddTaskUseCase(viewManagerModel, addTaskViewModel, userDataAccessObject);
-        return new GetTaskView(getTaskViewModel, switchViewController, closeTaskController, addTaskController);
+        return new GetTaskView(getTaskViewModel, switchViewController, closeTaskController, addTaskController, addTaskViewModel);
     }
 
     private static AddTaskController createaddTaskUseCase(ViewManagerModel viewManagerModel, AddTaskViewModel addTaskViewModel, AddTaskDataAccessInterface addTaskDataAccessInterface) {

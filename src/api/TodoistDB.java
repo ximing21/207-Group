@@ -187,7 +187,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-    public void addTask(Task task) throws Exception {
+    public void addTask(Task task) throws IOException, InterruptedException {
         String requestBody = "{\"content\": \"" + task.getTaskName() + "\", \"project_id\": \"" + task.getProjectId() + "\"}";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.todoist.com/rest/v2/tasks"))

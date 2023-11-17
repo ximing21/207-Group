@@ -1,6 +1,9 @@
 package use_case.add_task;
 
+import entity.Task;
+
+import java.io.IOException;
+
 public interface AddTaskDataAccessInterface {
-    boolean existsByName(String name);
-    void createProject(String name);
+    void addTask(Task task) throws IOException, InterruptedException;
 }

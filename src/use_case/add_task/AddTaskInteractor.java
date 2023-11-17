@@ -1,5 +1,7 @@
 package use_case.add_task;
 
+import entity.Task;
+
 public class AddTaskInteractor implements AddTaskInputBoundary {
     final AddTaskOutputBoundary presenter;
     final AddTaskDataAccessInterface dataAccessObject;
@@ -13,14 +15,10 @@ public class AddTaskInteractor implements AddTaskInputBoundary {
 
     @Override
     public void execute(AddTaskInputData addTaskInputData) {
-        if (dataAccessObject.existsByName(addTaskInputData.getName())) {
-            presenter.prepareFailView("Project already exists.");
-        } else {
-            String name = addTaskInputData.getName();
-            dataAccessObject.createProject(name);
+        Task task = Task.builder().build();
+        dataAccessObject.addTask(task);
 
-            AddTaskOutputData addTaskOutputData = new AddTaskOutputData(name);
-            presenter.prepareSuccessView(addTaskOutputData);
-        }
+        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(name);
+        presenter.prepareSuccessView(addTaskOutputData);
     }
 }

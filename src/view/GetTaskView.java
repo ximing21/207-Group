@@ -2,7 +2,10 @@ package view;
 
 
 import entity.Task;
+import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_task.AddTaskController;
+import interface_adapter.add_task.AddTaskState;
+import interface_adapter.add_task.AddTaskViewModel;
 import interface_adapter.close_task.CloseTaskController;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
@@ -12,6 +15,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -20,8 +25,10 @@ import java.util.Comparator;
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
     private final GetTaskViewModel getTaskViewModel;
+    private final AddTaskViewModel addTaskViewModel;
     private final SwitchViewController switchViewController;
     private final CloseTaskController closeTaskController;
+    private final AddTaskController addTaskController;
     private final JTextField taskNameInputField = new JTextField(15);
     private final JTextField deadlineInputField = new JTextField(10);
 
@@ -32,10 +39,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
 
 
-    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController, CloseTaskController closeTaskController, AddTaskController addTaskController) {
+    public GetTaskView(GetTaskViewModel getTaskViewModel,
+                       SwitchViewController switchViewController,
+                       CloseTaskController closeTaskController,
+                       AddTaskController addTaskController,
+                       AddTaskViewModel addTaskViewModel) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
         this.closeTaskController = closeTaskController;
+        this.addTaskController = addTaskController;
+        this.addTaskViewModel = addTaskViewModel;
 
         getTaskViewModel.addPropertyChangeListener(this);
 
@@ -64,6 +77,37 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         backToProjects.setFont(font);
         buttons.add(backToProjects);
 
+
+        addTask.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addTask)) {
+
+                            String taskName = taskNameInputField.getText().trim();
+                            String deadline = deadlineInputField.getText().trim();
+
+                            // Regular expression for the date format YYYY-MM-DD
+                            String dateFormatRegex = "^\\d{4}-\\d{2}-\\d{2}$";
+
+                            if (!taskName.isEmpty() && (deadline.isEmpty() || deadline.matches(dateFormatRegex))) {
+                                try {
+                                    addTaskController.execute(taskName, deadline);
+                                    taskNameInputField.setText(""); // Clear the input field
+                                    deadlineInputField.setText(""); // Clear the input field
+
+                                } catch (Exception ex) {
+                                    ex.printStackTrace();
+                                }
+                            } else if (!deadline.isEmpty() && !deadline.matches(dateFormatRegex)) {
+                            // Show error message if the deadline format is incorrect
+                            JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        }
+//                            JOptionPane.showMessageDialog(parent, currentState.getProject_name() +"successfully created");
+                        }
+
+                    }
+                }
+        );
 
         backToProjects.addActionListener(
                 new ActionListener() {
