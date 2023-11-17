@@ -23,7 +23,7 @@ import java.util.List;
 
 
 public class AddProjectView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "add project";
+    public final String viewName = "Add Project";
     private final GetProjectViewModel getProjectViewModel;
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
