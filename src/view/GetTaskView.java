@@ -2,6 +2,8 @@ package view;
 
 
 import entity.Task;
+import interface_adapter.add_task.AddTaskController;
+import interface_adapter.close_task.CloseTaskController;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
 import interface_adapter.switch_view.SwitchViewController;
@@ -12,29 +14,36 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
     private final GetTaskViewModel getTaskViewModel;
     private final SwitchViewController switchViewController;
-    private JList<String> projectList;
-    private DefaultListModel<String> listModel;
+    private final CloseTaskController closeTaskController;
     private final JTextField taskNameInputField = new JTextField(15);
     private final JTextField deadlineInputField = new JTextField(10);
 
     private final JButton addTask;
     private final JButton backToProjects;
+    private JTextArea tasksArea;
 
 
 
-    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController) {
+
+    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController, CloseTaskController closeTaskController, AddTaskController addTaskController) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
+        this.closeTaskController = closeTaskController;
 
         getTaskViewModel.addPropertyChangeListener(this);
 
-        this.listModel = new DefaultListModel<>();
-        this.projectList = new JList<>(listModel);
+        this.tasksArea = new JTextArea(10, 30);
+        tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
+        tasksArea.setLayout(new BoxLayout(tasksArea, BoxLayout.Y_AXIS));
+
+
 
         JLabel title = new JLabel(GetTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,6 +64,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         backToProjects.setFont(font);
         buttons.add(backToProjects);
 
+
         backToProjects.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -71,7 +81,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         inputPanel.add(deadlineInfo);
         inputPanel.add(addTask, BorderLayout.AFTER_LINE_ENDS);
 
-        JScrollPane scrollPane = new JScrollPane(projectList);
+        JScrollPane scrollPane = new JScrollPane(tasksArea);
         scrollPane.setPreferredSize(new Dimension(80,150));
 
         this.setPreferredSize(new Dimension(850, 300));
@@ -91,13 +101,31 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         Object state = evt.getNewValue();
         if (state instanceof GetTaskState) {
             GetTaskState getTaskState = (GetTaskState) state;
-            java.util.List<Task> tasks = getTaskState.getTasks();
-            listModel.clear();
+            java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
+            tasks.sort(Comparator.comparing(Task::IsCompleted));
+            tasksArea.removeAll();
             for (Task task : tasks) {
-                String taskName = task.getTaskName();
-                listModel.addElement(taskName);
+                JCheckBox checkBox = new JCheckBox(task.getTaskName());
+
+                checkBox.setSelected(task.IsCompleted());
+                checkBox.setEnabled(!task.IsCompleted());
+
+                checkBox.addActionListener(e -> {
+                    if (checkBox.isSelected()) {
+                        try {
+                            closeTaskController.execute(task.getTaskId());
+                            task.setCompleted(true);
+                            propertyChange(evt);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                tasksArea.add(checkBox);
             }
         }
+        tasksArea.revalidate();
+        tasksArea.repaint();
     }
 }
 

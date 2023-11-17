@@ -8,6 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import use_case.add_project.AddProjectDataAccessInterface;
+import use_case.add_task.AddTaskDataAccessInterface;
+import use_case.close_task.CloseTaskDataAccessInterface;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
 
@@ -20,7 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface {
+public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static String getApiToken() {
@@ -58,6 +60,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             throw new RuntimeException(e);
         }
     }
+
 
     public void deleteProject(String projectId) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
@@ -126,6 +129,24 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
+    public void closeTask(String taskId) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.todoist.com/rest/v2/tasks/" + taskId + "/close"))
+                .header("Authorization", API_TOKEN)
+                .POST(HttpRequest.BodyPublishers.noBody())
+                .build();
+
+        try {
+            HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+
+            if (response.statusCode() != 204) { // Check for the expected 204 status code
+                throw new IOException("Unexpected response status: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     //Precondition: the project name provided exists
     public Pair<String, ArrayList<Task>> getTasks(String name) {
@@ -177,14 +198,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public void closeTask(String taskId) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.todoist.com/rest/v2/tasks/" + taskId + "/close"))
-                .header("Authorization", "Bearer " + API_TOKEN)
-                .POST(HttpRequest.BodyPublishers.noBody())
-                .build();
-        client.send(request, HttpResponse.BodyHandlers.discarding());
-    }
 
     public boolean existsByName(String name) {
         this.getProject();
