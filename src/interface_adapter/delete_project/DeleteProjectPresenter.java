@@ -23,7 +23,6 @@ public class DeleteProjectPresenter implements DeleteProjectOutputBoundary {
         deleteProjectState.setCount(count);
         deleteProjectViewModel.setState(deleteProjectState);
         deleteProjectViewModel.firePropertyChanged();
-
     }
 
     @Override

@@ -156,32 +156,13 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                 if (SwingUtilities.isRightMouseButton(evt)) {
                     String selectedProjectWithCount = projectList.getSelectedValue();
                     String selectedProjectName = selectedProjectWithCount.split(" \\(")[0];
-                    AddProjectView.this.deleteProjectController.execute(selectedProjectName);
-//                    if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
-
-//                    int index = projectList.locationToIndex(evt.getPoint());
-//                    projectList.setSelectedIndex(index);
-
-//
-//                    int confirm = JOptionPane.showConfirmDialog(
-//                            this,
-//                            "Are you sure you want to delete the project '" + selectedProjectName + "'?",
-//                            "Delete Project",
-//                            JOptionPane.YES_NO_OPTION
-//                    );
-//
-//                    if (confirm == JOptionPane.YES_OPTION && selectedProjectId != null) {
-//                        try {
-//                            AddProjectView.this.deleteProjectController.execute(selectedProjectName);
-
-//                        } catch (Exception ex) {
-//                            ex.printStackTrace();
-//                        }
-//                    }
+                    Boolean result = deleteConfirmation(selectedProjectName);
+                    if (result == true) {
+                        AddProjectView.this.deleteProjectController.execute(selectedProjectName);
+                    }
                 }
             }
         });
-
 
 
         JScrollPane scrollPane = new JScrollPane(projectList);
@@ -196,6 +177,18 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         this.add(button);
     }
 
+    private Boolean deleteConfirmation(String name) {
+        int confirm = JOptionPane.showConfirmDialog(
+                            this,
+                            "Are you sure you want to delete the project '" + name + "'?",
+                            "Delete Project",
+                            JOptionPane.YES_NO_OPTION
+                    );
+        if (confirm == JOptionPane.YES_OPTION) {
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -227,7 +220,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
             String projectName = deleteProjectState.getProject_name();
             Integer count = deleteProjectState.getCount();
             String projectNameWithCount = projectName + " (# tasks: " + count.toString() +")";
-            System.out.println(projectNameWithCount);
             listModel.removeElement(projectNameWithCount);
         }
     }
