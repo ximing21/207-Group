@@ -2,6 +2,7 @@ package view;
 
 
 import entity.Task;
+import interface_adapter.close_task.CloseTaskController;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
 import interface_adapter.switch_view.SwitchViewController;
@@ -17,24 +18,29 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public final String viewName = "get task";
     private final GetTaskViewModel getTaskViewModel;
     private final SwitchViewController switchViewController;
-    private JList<String> taskList;
-    private DefaultListModel<String> listModel;
+    private final CloseTaskController closeTaskController;
     private final JTextField taskNameInputField = new JTextField(15);
     private final JTextField deadlineInputField = new JTextField(10);
 
     private final JButton addTask;
     private final JButton backToProjects;
+    private JTextArea tasksArea;
 
 
 
-    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController) {
+
+    public GetTaskView(GetTaskViewModel getTaskViewModel, SwitchViewController switchViewController, CloseTaskController closeTaskController) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
+        this.closeTaskController = closeTaskController;
 
         getTaskViewModel.addPropertyChangeListener(this);
 
-        this.listModel = new DefaultListModel<>();
-        this.taskList = new JList<>(listModel);
+        this.tasksArea = new JTextArea(10, 30);
+        tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
+        tasksArea.setLayout(new BoxLayout(tasksArea, BoxLayout.Y_AXIS));
+
+
 
         JLabel title = new JLabel(GetTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -72,7 +78,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         inputPanel.add(deadlineInfo);
         inputPanel.add(addTask, BorderLayout.AFTER_LINE_ENDS);
 
-        JScrollPane scrollPane = new JScrollPane(taskList);
+        JScrollPane scrollPane = new JScrollPane(tasksArea);
         scrollPane.setPreferredSize(new Dimension(80,150));
 
         this.setPreferredSize(new Dimension(850, 300));
@@ -93,12 +99,24 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         if (state instanceof GetTaskState) {
             GetTaskState getTaskState = (GetTaskState) state;
             java.util.List<Task> tasks = getTaskState.getTasks();
-            listModel.clear();
+            tasksArea.removeAll();
             for (Task task : tasks) {
-                String taskName = task.getTaskName();
-                listModel.addElement(taskName);
+                JCheckBox checkBox = new JCheckBox(task.getTaskName());
+                checkBox.addActionListener(e -> {
+                    if (checkBox.isSelected()) {
+                        try {
+                            closeTaskController.execute(task.getTaskId());
+                            checkBox.setEnabled(false);
+                        } catch (Exception ex) {
+                            ex.printStackTrace();
+                        }
+                    }
+                });
+                tasksArea.add(checkBox);
             }
         }
+        tasksArea.revalidate();
+        tasksArea.repaint();
     }
 }
 

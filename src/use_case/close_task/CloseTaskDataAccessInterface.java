@@ -4,5 +4,5 @@ import entity.Project;
 
 public interface CloseTaskDataAccessInterface {
 
-    boolean closeTask(String taskId);
+    void closeTask(String taskId);
 }

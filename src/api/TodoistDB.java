@@ -128,24 +128,22 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-    public boolean closeTask(String taskId) {
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("https://api.todoist.com/rest/v2/tasks/" + taskId + "/close")
-                .addHeader("Authorization", "Bearer " + API_TOKEN)
-                .addHeader("Content-Type", "application/json")
-                .post(RequestBody.create("", null))
+    public void closeTask(String taskId) {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.todoist.com/rest/v2/tasks/" + taskId + "/close"))
+                .header("Authorization", API_TOKEN)
+                .POST(HttpRequest.BodyPublishers.noBody())
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
-            if (response.body() != null) {
-                response.body().close();
+            HttpResponse<Void> response = client.send(request, HttpResponse.BodyHandlers.discarding());
+
+            if (response.statusCode() != 204) { // Check for the expected 204 status code
+                throw new IOException("Unexpected response status: " + response.statusCode());
             }
-            return response.isSuccessful();
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
-            return false;
         }
     }
 

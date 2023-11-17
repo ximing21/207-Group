@@ -30,7 +30,7 @@ public class GetTaskUseCaseFactory {
                                      TodoistDB userDataAccessObject) {
         SwitchViewController switchViewController = switchViewControllerUseCase(viewManagerModel, addProjectViewModel);
         CloseTaskController closeTaskController = createCloseTaskUseCase(viewManagerModel, closeTaskViewModel, userDataAccessObject);
-        return new GetTaskView(getTaskViewModel, switchViewController);
+        return new GetTaskView(getTaskViewModel, switchViewController, closeTaskController);
     }
 
     private static CloseTaskController createCloseTaskUseCase(ViewManagerModel viewManagerModel, CloseTaskViewModel closeTaskViewModel, CloseTaskDataAccessInterface closeTaskDataAccessInterface) {

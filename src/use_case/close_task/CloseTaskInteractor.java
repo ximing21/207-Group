@@ -11,11 +11,7 @@ public class CloseTaskInteractor implements CloseTaskInputBoundary {
 
     @Override
     public void execute(CloseTaskInputData inputData) {
-        boolean success = dataAccess.closeTask(inputData.getTaskId());
-        if (success) {
-            presenter.prepareSuccessView();
-        } else {
-            presenter.prepareFailView("Unable to close task.");
-        }
+        dataAccess.closeTask(inputData.getTaskId());
+        presenter.prepareSuccessView();
     }
 }
