@@ -13,6 +13,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
@@ -98,15 +100,21 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         Object state = evt.getNewValue();
         if (state instanceof GetTaskState) {
             GetTaskState getTaskState = (GetTaskState) state;
-            java.util.List<Task> tasks = getTaskState.getTasks();
+            java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
+            tasks.sort(Comparator.comparing(Task::IsCompleted));
             tasksArea.removeAll();
             for (Task task : tasks) {
                 JCheckBox checkBox = new JCheckBox(task.getTaskName());
+
+                checkBox.setSelected(task.IsCompleted());
+                checkBox.setEnabled(!task.IsCompleted());
+
                 checkBox.addActionListener(e -> {
                     if (checkBox.isSelected()) {
                         try {
                             closeTaskController.execute(task.getTaskId());
-                            checkBox.setEnabled(false);
+                            task.setCompleted(true);
+                            propertyChange(evt);
                         } catch (Exception ex) {
                             ex.printStackTrace();
                         }
