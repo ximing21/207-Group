@@ -1,9 +1,6 @@
 package interface_adapter.add_task;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.added_project.AddedProjectState;
-import interface_adapter.close_task.CloseTaskState;
-import use_case.add_project.AddProjectOutputData;
 import use_case.add_task.AddTaskOutputBoundary;
 import use_case.add_task.AddTaskOutputData;
 
