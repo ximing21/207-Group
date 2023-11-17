@@ -6,11 +6,13 @@ import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectState;
 import interface_adapter.added_project.AddedProjectViewModel;
+import interface_adapter.delete_project.DeleteProjectController;
+import interface_adapter.delete_project.DeleteProjectState;
+import interface_adapter.delete_project.DeleteProjectViewModel;
 import interface_adapter.get_all_projects.GetProjectController;
 import interface_adapter.get_all_projects.GetProjectState;
 import interface_adapter.get_all_projects.GetProjectViewModel;
 import interface_adapter.get_task.GetTaskController;
-import interface_adapter.get_task.GetTaskViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +23,7 @@ import java.util.List;
 
 
 public class AddProjectView extends JPanel implements ActionListener, PropertyChangeListener {
-    public final String viewName = "add project";
+    public final String viewName = "Add Project";
     private final GetProjectViewModel getProjectViewModel;
     private JList<String> projectList;
     private DefaultListModel<String> listModel;
@@ -33,6 +35,9 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
     private final JButton getProject;
     private final AddedProjectViewModel addedProjectViewModel;
     private final GetTaskController getTaskController;
+    private final DeleteProjectController deleteProjectController;
+    private final DeleteProjectViewModel deleteProjectViewModel;
+
 
 
 
@@ -41,7 +46,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                           AddedProjectViewModel addedProjectViewModel,
                           GetProjectViewModel getProjectViewModel,
                           GetProjectController getProjectController,
-                          GetTaskController getTaskController) {
+                          GetTaskController getTaskController, DeleteProjectController deleteProjectController, DeleteProjectViewModel deleteProjectViewModel) {
         this.addProjectViewModel = addProjectViewModel;
         this.addProjectController = addProjectController;
         this.addedProjectViewModel = addedProjectViewModel;
@@ -50,11 +55,14 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         this.getProjectViewModel = getProjectViewModel;
 
         this.getTaskController = getTaskController;
+        this.deleteProjectController = deleteProjectController;
+        this.deleteProjectViewModel = deleteProjectViewModel;
 
 
         getProjectViewModel.addPropertyChangeListener(this);
         addProjectViewModel.addPropertyChangeListener(this);
         addedProjectViewModel.addPropertyChangeListener(this);
+        this.deleteProjectViewModel.addPropertyChangeListener(this);
 
         this.listModel = new DefaultListModel<>();
         this.projectList = new JList<>(listModel);
@@ -143,6 +151,38 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
             }
         });
 
+        projectList.addMouseListener(new MouseAdapter() {
+            public void mouseClicked(MouseEvent evt) {
+                if (SwingUtilities.isRightMouseButton(evt)) {
+                    String selectedProjectWithCount = projectList.getSelectedValue();
+                    String selectedProjectName = selectedProjectWithCount.split(" \\(")[0];
+                    AddProjectView.this.deleteProjectController.execute(selectedProjectName);
+//                    if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
+
+//                    int index = projectList.locationToIndex(evt.getPoint());
+//                    projectList.setSelectedIndex(index);
+
+//
+//                    int confirm = JOptionPane.showConfirmDialog(
+//                            this,
+//                            "Are you sure you want to delete the project '" + selectedProjectName + "'?",
+//                            "Delete Project",
+//                            JOptionPane.YES_NO_OPTION
+//                    );
+//
+//                    if (confirm == JOptionPane.YES_OPTION && selectedProjectId != null) {
+//                        try {
+//                            AddProjectView.this.deleteProjectController.execute(selectedProjectName);
+
+//                        } catch (Exception ex) {
+//                            ex.printStackTrace();
+//                        }
+//                    }
+                }
+            }
+        });
+
+
 
         JScrollPane scrollPane = new JScrollPane(projectList);
         scrollPane.setPreferredSize(new Dimension(80,100));
@@ -182,6 +222,13 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                 String displayText = project.getName() + " (# tasks:" + project.getTaskCount() + ")";
                 listModel.addElement(displayText);
             }
+        } else if (state instanceof DeleteProjectState) {
+            DeleteProjectState deleteProjectState = (DeleteProjectState) state;
+            String projectName = deleteProjectState.getProject_name();
+            Integer count = deleteProjectState.getCount();
+            String projectNameWithCount = projectName + " (# tasks: " + count.toString() +")";
+            System.out.println(projectNameWithCount);
+            listModel.removeElement(projectNameWithCount);
         }
     }
 }

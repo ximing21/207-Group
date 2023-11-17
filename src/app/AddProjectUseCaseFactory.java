@@ -6,6 +6,9 @@ import interface_adapter.add_project.AddProjectController;
 import interface_adapter.add_project.AddProjectPresenter;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectViewModel;
+import interface_adapter.delete_project.DeleteProjectController;
+import interface_adapter.delete_project.DeleteProjectPresenter;
+import interface_adapter.delete_project.DeleteProjectViewModel;
 import interface_adapter.get_all_projects.GetProjectController;
 import interface_adapter.get_all_projects.GetProjectPresenter;
 import interface_adapter.get_all_projects.GetProjectViewModel;
@@ -16,6 +19,10 @@ import use_case.add_project.AddProjectDataAccessInterface;
 import use_case.add_project.AddProjectInputBoundary;
 import use_case.add_project.AddProjectInteractor;
 import use_case.add_project.AddProjectOutputBoundary;
+import use_case.delete_project.DeleteProjectDataAccessInterface;
+import use_case.delete_project.DeleteProjectInputBoundary;
+import use_case.delete_project.DeleteProjectInteractor;
+import use_case.delete_project.DeleteProjectOutputBoundary;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_all_projects.GetProjectInputBoundary;
 import use_case.get_all_projects.GetProjectInteractor;
@@ -34,12 +41,14 @@ public class AddProjectUseCaseFactory {
                                         AddProjectViewModel addProjectViewModel,
                                         TodoistDB userDataAccessObject,
                                         GetProjectViewModel getProjectViewModel,
-                                        GetTaskViewModel getTaskViewModel
+                                        GetTaskViewModel getTaskViewModel,
+                                        DeleteProjectViewModel deleteProjectViewModel
                                         ){
         AddProjectController addProjectController = createAddProjectUseCase(viewManagerModel, addProjectViewModel, addedProjectViewModel, userDataAccessObject);
         GetProjectController getProjectController = createGetProjectUseCase(viewManagerModel, getProjectViewModel, userDataAccessObject);
         GetTaskController getTaskController = createGetTaskUseCase(viewManagerModel, getTaskViewModel, userDataAccessObject);
-        return new AddProjectView(addProjectViewModel, addProjectController, addedProjectViewModel, getProjectViewModel, getProjectController, getTaskController);
+        DeleteProjectController deleteProjectController = createDeleteProjectUseCase(viewManagerModel, deleteProjectViewModel, userDataAccessObject);
+        return new AddProjectView(addProjectViewModel, addProjectController, addedProjectViewModel, getProjectViewModel, getProjectController, getTaskController, deleteProjectController, deleteProjectViewModel);
     }
 
     private static AddProjectController createAddProjectUseCase(ViewManagerModel viewManagerModel,
@@ -69,5 +78,12 @@ public class AddProjectUseCaseFactory {
         GetTaskOutputBoundary getTaskOutputBoundary = new GetTaskPresenter(getTaskViewModel, viewManagerModel);
         GetTaskInputBoundary getTaskInputBoundary = new GetTaskInteractor(getTaskOutputBoundary, userDataAccessObject);
         return new GetTaskController(getTaskInputBoundary);
+    }
+    private static DeleteProjectController createDeleteProjectUseCase(ViewManagerModel viewManagerModel,
+                                                                      DeleteProjectViewModel deleteProjectViewModel,
+                                                                      DeleteProjectDataAccessInterface userDataAccessObject) {
+        DeleteProjectOutputBoundary deleteProjectOutputBoundary = new DeleteProjectPresenter(deleteProjectViewModel, viewManagerModel);
+        DeleteProjectInputBoundary deleteProjectInteractor = new DeleteProjectInteractor(deleteProjectOutputBoundary, userDataAccessObject);
+        return new DeleteProjectController(deleteProjectInteractor);
     }
 }
