@@ -227,7 +227,6 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
             String projectName = deleteProjectState.getProject_name();
             Integer count = deleteProjectState.getCount();
             String projectNameWithCount = projectName + " (# tasks: " + count.toString() +")";
-            System.out.println(projectNameWithCount);
             listModel.removeElement(projectNameWithCount);
         }
     }

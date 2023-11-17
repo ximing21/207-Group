@@ -76,8 +76,10 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         try {
             Response response = client.newCall(request).execute();
             if (response.code() == 204) {
+                all_projects.remove(projectName);
                 Integer count = this.getTasksCountForProject(projectId);
                 return count;
+
             }
             else {
                 throw new RuntimeException("Error");
