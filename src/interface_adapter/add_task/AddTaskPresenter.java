@@ -19,6 +19,7 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
     public void prepareSuccessView(AddTaskOutputData response) {
         AddTaskState addTaskState = addTaskViewModel.getState();
         addTaskState.setTask_name(response.getName());
+        addTaskState.setTaskId(response.gettaskId());
         addTaskViewModel.setState(addTaskState); // Reset state or update as needed
         addTaskViewModel.firePropertyChanged();
     }
