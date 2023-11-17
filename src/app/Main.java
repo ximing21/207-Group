@@ -4,6 +4,7 @@ import api.TodoistDB;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_project.AddProjectViewModel;
 import interface_adapter.added_project.AddedProjectViewModel;
+import interface_adapter.close_task.CloseTaskViewModel;
 import interface_adapter.get_all_projects.GetProjectViewModel;
 import interface_adapter.get_task.GetTaskViewModel;
 import view.AddProjectView;
@@ -43,6 +44,7 @@ public class Main {
         AddedProjectViewModel addedProjectViewModel = new AddedProjectViewModel();
         GetProjectViewModel getProjectViewModel = new GetProjectViewModel();
         GetTaskViewModel getTaskViewModel = new GetTaskViewModel();
+        CloseTaskViewModel closeTaskViewModel = new CloseTaskViewModel();
 
         TodoistDB userDataAccessObject;
         userDataAccessObject = new TodoistDB();
@@ -52,7 +54,7 @@ public class Main {
                         userDataAccessObject, getProjectViewModel, getTaskViewModel);
         views.add(addProjectView, addProjectView.viewName);
 
-        GetTaskView getTaskView = GetTaskUseCaseFactory.create(getTaskViewModel,viewManagerModel, addProjectViewModel);
+        GetTaskView getTaskView = GetTaskUseCaseFactory.create(getTaskViewModel,viewManagerModel, addProjectViewModel, closeTaskViewModel, userDataAccessObject);
         views.add(getTaskView, getTaskView.viewName);
 
         viewManagerModel.setActiveView(addProjectView.viewName);

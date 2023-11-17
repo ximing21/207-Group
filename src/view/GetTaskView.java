@@ -17,7 +17,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public final String viewName = "get task";
     private final GetTaskViewModel getTaskViewModel;
     private final SwitchViewController switchViewController;
-    private JList<String> projectList;
+    private JList<String> taskList;
     private DefaultListModel<String> listModel;
     private final JTextField taskNameInputField = new JTextField(15);
     private final JTextField deadlineInputField = new JTextField(10);
@@ -34,7 +34,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         getTaskViewModel.addPropertyChangeListener(this);
 
         this.listModel = new DefaultListModel<>();
-        this.projectList = new JList<>(listModel);
+        this.taskList = new JList<>(listModel);
 
         JLabel title = new JLabel(GetTaskViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -55,6 +55,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         backToProjects.setFont(font);
         buttons.add(backToProjects);
 
+
         backToProjects.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -71,7 +72,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         inputPanel.add(deadlineInfo);
         inputPanel.add(addTask, BorderLayout.AFTER_LINE_ENDS);
 
-        JScrollPane scrollPane = new JScrollPane(projectList);
+        JScrollPane scrollPane = new JScrollPane(taskList);
         scrollPane.setPreferredSize(new Dimension(80,150));
 
         this.setPreferredSize(new Dimension(850, 300));
