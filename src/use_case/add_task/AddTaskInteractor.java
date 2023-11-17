@@ -19,9 +19,9 @@ public class AddTaskInteractor implements AddTaskInputBoundary {
     @Override
     public void execute(AddTaskInputData addTaskInputData) {
         String taskName = addTaskInputData.getTaskName();
-        dataAccessObject.addTask(addTaskInputData.getTaskName(), addTaskInputData.getProjectName());
+        String taskId = dataAccessObject.addTask(addTaskInputData.getTaskName(), addTaskInputData.getProjectName());
 
-        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(taskName);
+        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(taskName, taskId);
         presenter.prepareSuccessView(addTaskOutputData);
     }
 }

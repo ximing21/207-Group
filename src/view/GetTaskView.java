@@ -143,6 +143,17 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public void actionPerformed(ActionEvent e) {
     }
 
+    private void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
+        if (checkBox.isSelected()) {
+            try {
+                closeTaskController.execute(taskId);
+                checkBox.setEnabled(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object state = evt.getNewValue();
@@ -161,17 +172,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             for (Task task : tasks) {
                 JCheckBox checkBox = new JCheckBox(task.getTaskName());
 
-
-                checkBox.addActionListener(e -> {
-                    if (checkBox.isSelected()) {
-                        try {
-                            closeTaskController.execute(task.getTaskId());
-                            checkBox.setEnabled(false);
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                });
+                checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
                 tasksArea.add(checkBox);
             }
         } else if (state instanceof AddTaskState) {
@@ -179,15 +180,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             String newTaskName = addTaskState.getTask_name();
             if (!newTaskName.isEmpty()) {
                 JCheckBox newTaskCheckBox = new JCheckBox(newTaskName);
-
-                newTaskCheckBox.addActionListener(e -> {
-                    if (newTaskCheckBox.isSelected()) {
-                        // Disable the checkbox
-                        newTaskCheckBox.setEnabled(false);
-                    }
-                });
-
+                String newTaskId = addTaskState.getTaskId();
+                newTaskCheckBox.addActionListener(e -> handleCheckBoxAction(newTaskId, newTaskCheckBox));
                 tasksArea.add(newTaskCheckBox, 0);
+
             }
         }
         tasksArea.revalidate();
