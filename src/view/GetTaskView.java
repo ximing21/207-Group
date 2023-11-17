@@ -103,9 +103,9 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                                     ex.printStackTrace();
                                 }
                             } else if (!deadline.isEmpty() && !deadline.matches(dateFormatRegex)) {
-                                // Show error message if the deadline format is incorrect
-                                JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                            }
+                            // Show error message if the deadline format is incorrect
+                            JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                        }
                         }
 
                     }
@@ -137,7 +137,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         this.add(inputPanel);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(buttons);
-    }
+        }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -194,3 +194,4 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         tasksArea.repaint();
     }
 }
+

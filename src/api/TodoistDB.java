@@ -203,8 +203,10 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() != 200) {
+                System.out.println("Response Body: " + response.body()); // 打印响应体以供调试
                 throw new IOException("Unexpected response status: " + response.statusCode());
             }
+            // 处理响应体
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
