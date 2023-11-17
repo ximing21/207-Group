@@ -187,16 +187,30 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-    public void addTask(Task task) throws Exception {
-        String requestBody = "{\"content\": \"" + task.getTaskName() + "\", \"project_id\": \"" + task.getProjectId() + "\"}";
+    public void addTask(String taskName, String projectName) {
+        HttpClient client = HttpClient.newHttpClient();
+        this.getProject();
+        String id = all_projects.get(projectName);
+        String requestBody = "{\"content\": \"" + taskName + "\", \"project_id\": \"" + id + "\"}";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.todoist.com/rest/v2/tasks"))
-                .header("Authorization", "Bearer " + API_TOKEN)
+                .header("Authorization", API_TOKEN)
                 .header("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(requestBody))
                 .build();
-        client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                throw new IOException("Unexpected response status: " + response.statusCode());
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
+
+
 
 
     public boolean existsByName(String name) {

@@ -1,9 +1,9 @@
 package interface_adapter.add_task;
 
-import use_case.add_project.AddProjectInputBoundary;
-import use_case.add_project.AddProjectInputData;
 import use_case.add_task.AddTaskInputBoundary;
 import use_case.add_task.AddTaskInputData;
+
+import java.io.IOException;
 
 public class AddTaskController {
     final AddTaskInputBoundary addTaskInteractor;
@@ -11,9 +11,8 @@ public class AddTaskController {
         this.addTaskInteractor = addTaskInteractor;
     }
 
-    public void execute(String name) {
-        AddTaskInputData addTaskInputData = new AddTaskInputData(name);
-
+    public void execute(String taskName, String deadline, String projectName) {
+        AddTaskInputData addTaskInputData = new AddTaskInputData(taskName, deadline, projectName);
         addTaskInteractor.execute(addTaskInputData);
     }
 }

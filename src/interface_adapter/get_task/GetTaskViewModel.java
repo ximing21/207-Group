@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class GetTaskViewModel extends ViewModel {
-    public static String TITLE_LABEL = "?????";
+    public String titleLabel = "?";
     public static final String ADD_TASK_BUTTON_LABEL = "Add Task";
     public static final String TASK_NAME_LABEL = "Choose task name:";
     public static final String DEADLINE_LABEL = "Due date(YYYY-MM-DD):";
@@ -19,7 +19,15 @@ public class GetTaskViewModel extends ViewModel {
     @Override
     public void firePropertyChanged() {support.firePropertyChange("state", null, this.state);}
 
-    public void setTITLE_LABEL(String TITLE_LABEL) {this.TITLE_LABEL = TITLE_LABEL;}
+    public void setTitleLabel(String titleLabel) {
+        String oldTitle = this.titleLabel;
+        this.titleLabel = titleLabel;
+        support.firePropertyChange("titleLabel", oldTitle, titleLabel);
+    }
+
+    public String getTitleLabel() {
+        return titleLabel;
+    }
 
     public GetTaskState getState() {
         return state;
