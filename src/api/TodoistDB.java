@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import use_case.add_project.AddProjectDataAccessInterface;
 import use_case.add_task.AddTaskDataAccessInterface;
 import use_case.close_task.CloseTaskDataAccessInterface;
+import use_case.delete_project.DeleteProjectDataAccessInterface;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
 
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface {
+public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface, DeleteProjectDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
 
     public static String getApiToken() {
@@ -62,13 +63,28 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
 
-    public void deleteProject(String projectId) throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("https://api.todoist.com/rest/v2/projects/" + projectId))
-                .header("Authorization", "Bearer " + API_TOKEN)
-                .DELETE()
+    public Integer deleteProject(String projectName) {
+        this.getProject();
+        String projectId = all_projects.get(projectName);
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .delete()
+                .url("https://api.todoist.com/rest/v2/projects/"+ projectId)
+                .addHeader("Authorization", API_TOKEN)
+                .addHeader("Content-Type", "application/json")
                 .build();
-        client.send(request, HttpResponse.BodyHandlers.discarding());
+        try {
+            Response response = client.newCall(request).execute();
+            if (response.code() == 204) {
+                Integer count = this.getTasksCountForProject(projectId);
+                return count;
+            }
+            else {
+                throw new RuntimeException("Error");
+            }
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
