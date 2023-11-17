@@ -14,6 +14,14 @@ public class Task{
         this.isCompleted = isCompleted;
     }
 
+    public boolean IsCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
 
     public static TaskBuilder builder() {return new TaskBuilder();}
 
@@ -70,4 +78,6 @@ public class Task{
     public String getProjectId() {
         return projectId;
     }
+
+
 }
