@@ -187,7 +187,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-    public void addTask(String taskName, String projectName) {
+    public String addTask(String taskName, String projectName) {
         HttpClient client = HttpClient.newHttpClient();
         this.getProject();
         String id = all_projects.get(projectName);
@@ -202,15 +202,20 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         try {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200) {
-                System.out.println("Response Body: " + response.body()); // 打印响应体以供调试
+            if (response.statusCode() == 200) {
+                // Parse the response body to get the task ID
+                JSONObject jsonResponse = new JSONObject(response.body());
+                String taskId = jsonResponse.getString("id");
+                return taskId; // Return the task ID
+            } else {
                 throw new IOException("Unexpected response status: " + response.statusCode());
             }
-            // 处理响应体
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
+            return null; // Return null or handle the error as appropriate
         }
     }
+
 
 
 

@@ -46,6 +46,9 @@ public class AddTaskState {
     public void setTask_name(String task_name) {
         this.task_name = task_name;
     }
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 
     public String getTask_nameError() {
         return task_nameError;

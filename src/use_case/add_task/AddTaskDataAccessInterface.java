@@ -5,5 +5,5 @@ import entity.Task;
 import java.io.IOException;
 
 public interface AddTaskDataAccessInterface {
-    void addTask(String taskName, String projectName);
+    String addTask(String taskName, String projectName);
 }
