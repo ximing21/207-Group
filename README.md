@@ -9,15 +9,10 @@ Our team is considering developing a time management application focusing on min
 * **Minimalist Design**: A clean and visually pleasing user interface.
 
 ### 2. To-do List Management (Create to-do list)
-* Add project
+* Add, delete project
 * Get all projects
-* Add task
+* Add, check-off task (with deadline showing)
 * Get all tasks
-
-### 3. Use Cases
-* A college student Jacob wants to manage the tasks for each course he is currently taking. He creates project for each course.
-
-
 
 ## API Documentation
 [API Documentation](https://developer.todoist.com/rest/v2/#overview)
