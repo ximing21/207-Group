@@ -6,7 +6,9 @@ import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_task.AddTaskController;
 import interface_adapter.add_task.AddTaskState;
 import interface_adapter.add_task.AddTaskViewModel;
+import interface_adapter.added_project.AddedProjectState;
 import interface_adapter.close_task.CloseTaskController;
+import interface_adapter.get_all_projects.GetProjectState;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
 import interface_adapter.switch_view.SwitchViewController;
@@ -24,6 +26,7 @@ import java.util.Comparator;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
+    private final JLabel projectNameTitle;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
     private final SwitchViewController switchViewController;
@@ -58,10 +61,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
 
 
-        JLabel title = new JLabel(GetTaskViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setFont(new Font("Serif", Font.BOLD, 30));
-        title.setForeground(Color.darkGray);
+        this.projectNameTitle = new JLabel(getTaskViewModel.getTitleLabel());
+        projectNameTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
+        projectNameTitle.setFont(new Font("Serif", Font.BOLD, 30));
+        projectNameTitle.setForeground(Color.darkGray);
 
         LabelTextPanel taskNameInfo = new LabelTextPanel(
                 new JLabel(GetTaskViewModel.TASK_NAME_LABEL), taskNameInputField);
@@ -91,7 +94,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
                             if (!taskName.isEmpty() && (deadline.isEmpty() || deadline.matches(dateFormatRegex))) {
                                 try {
-                                    addTaskController.execute(taskName, deadline);
+                                    addTaskController.execute(taskName, deadline, getTaskViewModel.getTitleLabel());
                                     taskNameInputField.setText(""); // Clear the input field
                                     deadlineInputField.setText(""); // Clear the input field
 
@@ -102,7 +105,6 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                             // Show error message if the deadline format is incorrect
                             JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                         }
-//                            JOptionPane.showMessageDialog(parent, currentState.getProject_name() +"successfully created");
                         }
 
                     }
@@ -130,7 +132,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
         this.setPreferredSize(new Dimension(850, 300));
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
+        this.add(projectNameTitle);
         this.add(inputPanel);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(buttons);
@@ -143,8 +145,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object state = evt.getNewValue();
+
+        if ("titleLabel".equals(evt.getPropertyName())) {
+            projectNameTitle.setText((String) evt.getNewValue());
+            projectNameTitle.revalidate();
+            projectNameTitle.repaint();
+        }
+
         if (state instanceof GetTaskState) {
             GetTaskState getTaskState = (GetTaskState) state;
+
             java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
             tasks.sort(Comparator.comparing(Task::IsCompleted));
             tasksArea.removeAll();
@@ -167,6 +177,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 });
                 tasksArea.add(checkBox);
             }
+        } else if (state instanceof AddTaskState) {
+            AddTaskState addTaskState = (AddTaskState) state;
+            JCheckBox checkBox = new JCheckBox(addTaskState.getTask_name());
+            tasksArea.add(checkBox);
         }
         tasksArea.revalidate();
         tasksArea.repaint();

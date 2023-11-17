@@ -1,6 +1,9 @@
 package use_case.add_task;
 
 import entity.Task;
+import use_case.add_project.AddProjectOutputData;
+
+import java.io.IOException;
 
 public class AddTaskInteractor implements AddTaskInputBoundary {
     final AddTaskOutputBoundary presenter;
@@ -15,10 +18,10 @@ public class AddTaskInteractor implements AddTaskInputBoundary {
 
     @Override
     public void execute(AddTaskInputData addTaskInputData) {
-        Task task = Task.builder().build();
-        dataAccessObject.addTask(task);
+        String taskName = addTaskInputData.getTaskName();
+        dataAccessObject.addTask(addTaskInputData.getTaskName(), addTaskInputData.getProjectName());
 
-        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(name);
+        AddTaskOutputData addTaskOutputData = new AddTaskOutputData(taskName);
         presenter.prepareSuccessView(addTaskOutputData);
     }
 }
