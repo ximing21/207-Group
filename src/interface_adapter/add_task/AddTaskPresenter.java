@@ -20,6 +20,7 @@ public class AddTaskPresenter implements AddTaskOutputBoundary {
         AddTaskState addTaskState = addTaskViewModel.getState();
         addTaskState.setTask_name(response.getName());
         addTaskState.setTaskId(response.gettaskId());
+        addTaskState.setTaskDeadline(response.getdeadline());
         addTaskViewModel.setState(addTaskState); // Reset state or update as needed
         addTaskViewModel.firePropertyChanged();
     }
