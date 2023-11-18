@@ -93,7 +93,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                             String deadlineString = deadlineInputField.getText().trim();
 
                             // Regular expression for the date format YYYY-MM-DD
-                            String dateFormatRegex = "^\\d{4}-\\d{2}-\\d{2}$";
+                            String dateFormatRegex = "^20\\d{2}-[01]\\d-[0123]\\d$";;
 
                             if (!taskName.isEmpty() && (deadlineString.isEmpty() || deadlineString.matches(dateFormatRegex))) {
                                 try {
@@ -107,7 +107,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                                 }
                             } else if (!deadlineString.isEmpty() && !deadlineString.matches(dateFormatRegex)) {
                                 // Show error message if the deadline format is incorrect
-                                JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null, "Invalid date or format. Please input a valid date in the format of YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
                             }
                         }
 
