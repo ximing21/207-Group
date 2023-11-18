@@ -153,11 +153,15 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
 
         projectList.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
-                if (SwingUtilities.isRightMouseButton(evt)) {
+                if (SwingUtilities.isRightMouseButton(evt) && evt.getClickCount() == 1) {
+
+                    int index = projectList.locationToIndex(evt.getPoint());
+                    projectList.setSelectedIndex(index);
+
                     String selectedProjectWithCount = projectList.getSelectedValue();
                     String selectedProjectName = selectedProjectWithCount.split(" \\(")[0];
                     Boolean result = deleteConfirmation(selectedProjectName);
-                    if (result == true) {
+                    if (result) {
                         AddProjectView.this.deleteProjectController.execute(selectedProjectName);
                     }
                 }
@@ -179,15 +183,12 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
 
     private Boolean deleteConfirmation(String name) {
         int confirm = JOptionPane.showConfirmDialog(
-                            this,
-                            "Are you sure you want to delete the project '" + name + "'?",
-                            "Delete Project",
-                            JOptionPane.YES_NO_OPTION
-                    );
-        if (confirm == JOptionPane.YES_OPTION) {
-            return true;
-        }
-        return false;
+                this,
+                "Are you sure you want to delete the project '" + name + "'?",
+                "Delete Project",
+                JOptionPane.YES_NO_OPTION
+        );
+        return confirm == JOptionPane.YES_OPTION;
     }
 
     @Override
@@ -224,3 +225,4 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
         }
     }
 }
+
