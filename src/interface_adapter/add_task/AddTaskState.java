@@ -1,6 +1,7 @@
 package interface_adapter.add_task;
 
 import interface_adapter.add_project.AddProjectState;
+import java.time.LocalDate;
 
 public class AddTaskState {
     private String project_name = "";
@@ -8,6 +9,7 @@ public class AddTaskState {
     private String task_name = "";
     private String taskId = "";
     private String task_nameError = null;
+    private String taskDeadline;
 
 
     public AddTaskState(AddTaskState copy) {
@@ -16,6 +18,7 @@ public class AddTaskState {
         task_name = copy.task_name;
         taskId = copy.taskId;
         task_nameError = copy.task_nameError;
+        taskDeadline = copy.taskDeadline;
     }
 
     public AddTaskState() {}
@@ -30,6 +33,13 @@ public class AddTaskState {
 
     public String getProject_nameError() {
         return project_nameError;
+    }
+    public String getTaskDeadline() {
+        return taskDeadline;
+    }
+
+    public void setTaskDeadline(String deadline) {
+        this.taskDeadline = deadline;
     }
 
     public void setProject_nameError(String project_nameError) {

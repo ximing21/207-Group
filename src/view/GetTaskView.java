@@ -21,6 +21,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -88,24 +90,25 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                         if (evt.getSource().equals(addTask)) {
 
                             String taskName = taskNameInputField.getText().trim();
-                            String deadline = deadlineInputField.getText().trim();
+                            String deadlineString = deadlineInputField.getText().trim();
 
                             // Regular expression for the date format YYYY-MM-DD
                             String dateFormatRegex = "^\\d{4}-\\d{2}-\\d{2}$";
 
-                            if (!taskName.isEmpty() && (deadline.isEmpty() || deadline.matches(dateFormatRegex))) {
+                            if (!taskName.isEmpty() && (deadlineString.isEmpty() || deadlineString.matches(dateFormatRegex))) {
                                 try {
-                                    addTaskController.execute(taskName, deadline, getTaskViewModel.getTitleLabel());
+
+                                    addTaskController.execute(taskName, deadlineString, getTaskViewModel.getTitleLabel());
+
                                     taskNameInputField.setText(""); // Clear the input field
                                     deadlineInputField.setText(""); // Clear the input field
-
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
-                            } else if (!deadline.isEmpty() && !deadline.matches(dateFormatRegex)) {
-                            // Show error message if the deadline format is incorrect
-                            JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-                        }
+                            } else if (!deadlineString.isEmpty() && !deadlineString.matches(dateFormatRegex)) {
+                                // Show error message if the deadline format is incorrect
+                                JOptionPane.showMessageDialog(null, "Invalid deadline format. Please use YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                            }
                         }
 
                     }
@@ -137,21 +140,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         this.add(inputPanel);
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(buttons);
-        }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-    }
-
-    private void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
-        if (checkBox.isSelected()) {
-            try {
-                closeTaskController.execute(taskId);
-                checkBox.setEnabled(false);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        }
     }
 
     @Override
@@ -168,9 +160,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
             GetTaskState getTaskState = (GetTaskState) state;
 
             java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
+
+
             tasksArea.removeAll();
             for (Task task : tasks) {
-                JCheckBox checkBox = new JCheckBox(task.getTaskName());
+
+                String deadlineText = task.getDeadline() != null && !task.getDeadline().isEmpty()
+                        ? " (Deadline: " + task.getDeadline() + ")"
+                        : ""; // If there is no deadline, it is not displayed
+                String taskText = task.getTaskName() + deadlineText;
+                JCheckBox checkBox = new JCheckBox(taskText);
 
                 checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
                 tasksArea.add(checkBox);
@@ -178,8 +177,16 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         } else if (state instanceof AddTaskState) {
             AddTaskState addTaskState = (AddTaskState) state;
             String newTaskName = addTaskState.getTask_name();
+            String newTaskDeadline = addTaskState.getTaskDeadline();
+
+            // Check if new tasks have deadlines
+            String deadlineText = newTaskDeadline != null && !newTaskDeadline.isEmpty()
+                    ? " (Deadline: " + newTaskDeadline + ")"
+                    : ""; // If there is no deadline, it is not displayed
+
             if (!newTaskName.isEmpty()) {
-                JCheckBox newTaskCheckBox = new JCheckBox(newTaskName);
+                String taskText = newTaskName + deadlineText;
+                JCheckBox newTaskCheckBox = new JCheckBox(taskText);
                 String newTaskId = addTaskState.getTaskId();
                 newTaskCheckBox.addActionListener(e -> handleCheckBoxAction(newTaskId, newTaskCheckBox));
                 tasksArea.add(newTaskCheckBox, 0);
@@ -189,5 +196,15 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         tasksArea.revalidate();
         tasksArea.repaint();
     }
-}
 
+    private void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
+        if (checkBox.isSelected()) {
+            try {
+                closeTaskController.execute(taskId);
+                checkBox.setEnabled(false);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+}

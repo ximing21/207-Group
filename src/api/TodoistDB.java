@@ -22,6 +22,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDate;
 
 public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface, DeleteProjectDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
@@ -185,12 +186,19 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                 for (int i = 0; i < responseBody.length(); i++) {
                     JSONObject element = responseBody.getJSONObject(i);
                     if (element.getString("project_id").equals(id)) {
+
+                        String deadline = "";
+                        if (!element.isNull("due")) { // Check if "due" exists.
+                            JSONObject dueObject = element.getJSONObject("due");
+                            deadline = dueObject.getString("string");
+                        }
+
                         Task task = Task.builder()
                                 .TaskId(element.getString("id"))
                                 .TaskName(element.getString("content"))
                                 .ProjectId(element.getString("project_id"))
                                 .IsCompleted(element.getBoolean("is_completed"))
-//                                .Deadline(element.getJSONObject("due").getString("date"))
+                                .Deadline(deadline)
                                 .build();
                         tasks.add(task);
                     }
@@ -205,11 +213,13 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         }
     }
 
-    public String addTask(String taskName, String projectName) {
+    public String addTask(String taskName, String projectName, String deadline) {
         HttpClient client = HttpClient.newHttpClient();
         this.getProject();
         String id = all_projects.get(projectName);
-        String requestBody = "{\"content\": \"" + taskName + "\", \"project_id\": \"" + id + "\"}";
+        String requestBody = "{\"content\": \"" + taskName +
+                "\", \"project_id\": \"" + id +
+                "\", \"due_date\": \"" + deadline + "\"}";
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://api.todoist.com/rest/v2/tasks"))
                 .header("Authorization", API_TOKEN)
