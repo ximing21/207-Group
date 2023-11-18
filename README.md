@@ -1,4 +1,4 @@
-# Time Management & To-do List Project
+# Time! Todo (Time Management & To-do List Project)
 
 ## Project Description
 Welcome to our Time Management & To-Do List Project! This application is designed to help users effectively manage their tasks through a minimalist design and user-friendly features. It's perfect for students, professionals, or anyone looking to streamline their day.
