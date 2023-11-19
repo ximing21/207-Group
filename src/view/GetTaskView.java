@@ -6,12 +6,9 @@ import interface_adapter.add_task.AddTaskController;
 import interface_adapter.add_task.AddTaskState;
 import interface_adapter.add_task.AddTaskViewModel;
 import interface_adapter.close_task.CloseTaskController;
-import interface_adapter.close_task.CloseTaskState;
-import interface_adapter.close_task.CloseTaskViewModel;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
 import interface_adapter.switch_view.SwitchViewController;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -137,6 +134,9 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public void actionPerformed(ActionEvent e) {
     }
 
+    JPanel panel = new JPanel();
+    JLabel message = new JLabel();
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         Object state = evt.getNewValue();
@@ -164,8 +164,8 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
                 tasksArea.add(checkBox);
             }
-            JPanel panel = new JPanel();
-            JLabel message = new JLabel(getTaskState.getMessage());
+
+            message.setText(getTaskState.getMessage());
             message.setFont(new Font("Serif", Font.ITALIC, 15));
             panel.add(message);
             this.add(panel);
