@@ -9,4 +9,5 @@ import java.util.Map;
 public interface GetTaskDataAccessInterface {
     boolean existsByName(String name);
     Pair<String, ArrayList<Task>> getTasks(String name);
+    public String getMessage();
 }

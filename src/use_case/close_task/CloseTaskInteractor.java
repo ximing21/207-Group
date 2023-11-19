@@ -13,8 +13,6 @@ public class CloseTaskInteractor implements CloseTaskInputBoundary {
     @Override
     public void execute(CloseTaskInputData inputData) {
         dataAccess.closeTask(inputData.getTaskId());
-        String phrase = dataAccess.getMessage();
-        CloseTaskOutputData result = new CloseTaskOutputData(phrase);
-        presenter.prepareSuccessView(result);
+        presenter.prepareSuccessView();
     }
 }

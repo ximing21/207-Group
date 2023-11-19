@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class GetTaskState {
     private ArrayList<Task> tasks;
+    private String message;
 
     public GetTaskState() {}
 
@@ -16,4 +17,8 @@ public class GetTaskState {
     public void setTasks(ArrayList<Task> tasks) {
         this.tasks = tasks;
     }
+
+    public String getMessage() {return message;}
+
+    public void setMessage(String message) {this.message = message;}
 }

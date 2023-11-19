@@ -27,7 +27,8 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
         } else {
             String name = getTaskInputData.getName();
             Pair<String, ArrayList<Task>> result = dataAccessObject.getTasks(name);
-            GetTaskOutputData getTaskOutputData = new GetTaskOutputData(result);
+            String message = dataAccessObject.getMessage();
+            GetTaskOutputData getTaskOutputData = new GetTaskOutputData(result, message);
             presenter.prepareSuccessView(getTaskOutputData);
         }
 

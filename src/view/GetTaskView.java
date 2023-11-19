@@ -25,7 +25,6 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     private final JLabel projectNameTitle;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
-    private final CloseTaskViewModel closeTaskViewModel;
     private final SwitchViewController switchViewController;
     private final CloseTaskController closeTaskController;
     private final AddTaskController addTaskController;
@@ -38,28 +37,23 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
 
 
-
     public GetTaskView(GetTaskViewModel getTaskViewModel,
                        SwitchViewController switchViewController,
                        CloseTaskController closeTaskController,
                        AddTaskController addTaskController,
-                       AddTaskViewModel addTaskViewModel, CloseTaskViewModel closeTaskViewModel) {
+                       AddTaskViewModel addTaskViewModel) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
         this.closeTaskController = closeTaskController;
         this.addTaskController = addTaskController;
         this.addTaskViewModel = addTaskViewModel;
-        this.closeTaskViewModel = closeTaskViewModel;
 
         getTaskViewModel.addPropertyChangeListener(this);
         addTaskViewModel.addPropertyChangeListener(this);
-        closeTaskViewModel.addPropertyChangeListener(this);
 
         this.tasksArea = new JTextArea(10, 30);
         tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
         tasksArea.setLayout(new BoxLayout(tasksArea, BoxLayout.Y_AXIS));
-
-
 
         this.projectNameTitle = new JLabel(getTaskViewModel.getTitleLabel());
         projectNameTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -158,7 +152,6 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
             java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
 
-
             tasksArea.removeAll();
             for (Task task : tasks) {
 
@@ -171,6 +164,12 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
                 tasksArea.add(checkBox);
             }
+            JPanel panel = new JPanel();
+            JLabel message = new JLabel(getTaskState.getMessage());
+            message.setFont(new Font("Serif", Font.ITALIC, 15));
+            panel.add(message);
+            this.add(panel);
+
         } else if (state instanceof AddTaskState) {
             AddTaskState addTaskState = (AddTaskState) state;
             String newTaskName = addTaskState.getTask_name();
@@ -187,11 +186,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 String newTaskId = addTaskState.getTaskId();
                 newTaskCheckBox.addActionListener(e -> handleCheckBoxAction(newTaskId, newTaskCheckBox));
                 tasksArea.add(newTaskCheckBox, 0);
+
             }
-        } else if (state instanceof CloseTaskState) {
-            CloseTaskState closeTaskState = (CloseTaskState) state;
-            JOptionPane.showMessageDialog(this, closeTaskState.getPhrase());
         }
+
         tasksArea.revalidate();
         tasksArea.repaint();
     }
