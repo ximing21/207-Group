@@ -20,7 +20,7 @@ In the hustle and bustle of daily life, keeping track of tasks and deadlines can
   - **Get All Tasks**: Get an overview of all tasks within a project.
 
 ### Use Cases
-- **1.**: Jacob, a college student, organizes his courses by creating a separate project for each one.
+- **1.** Jacob, a college student, organizes his courses by creating a separate project for each one.
 - **2.** Jacob can double-click the project name to get an overview of all tasks for the project.
 - **3.** Jacob can delete a project by right-clicking the project name.
 - **4.** Jacob can add new tasks to any project, either with or without a deadline, based on his needs.
