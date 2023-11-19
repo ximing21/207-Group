@@ -1,7 +1,7 @@
 package use_case.close_task;
 
 public interface CloseTaskOutputBoundary {
-    void prepareSuccessView();
+    void prepareSuccessView(CloseTaskOutputData phrase);
 
     void prepareFailView(String error);
 }

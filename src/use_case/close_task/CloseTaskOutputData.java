@@ -3,13 +3,15 @@ package use_case.close_task;
 import entity.Project;
 
 public class CloseTaskOutputData {
-    private final Project[] projects;
 
-    public CloseTaskOutputData(Project[] projects) {
-        this.projects = projects;
+    private final String phrase;
+
+    public CloseTaskOutputData(String phrase) {
+        this.phrase = phrase;
+
     }
 
-    public Project[] getPojects() {
-        return projects;
+    public String getPhrase() {
+        return this.phrase;
     }
 }

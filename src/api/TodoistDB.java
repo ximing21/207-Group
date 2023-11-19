@@ -14,14 +14,14 @@ import use_case.delete_project.DeleteProjectDataAccessInterface;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.time.LocalDate;
 
 public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface, DeleteProjectDataAccessInterface {
@@ -31,11 +31,10 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
         return API_TOKEN;
     }
     private final Map<String,String> all_projects = new HashMap<>() {};
-
-    private HttpClient client;
+    private final Map<Integer, String> phrases = new HashMap<>();
 
     @Override
-    public void createProject(String name) throws JSONException {
+    public void createProject(String name) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
         JSONObject requestBody = new JSONObject();
@@ -51,9 +50,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
-//                String id = responseBody.getString("id");
-//                String project_name = responseBody.getString("name");
-//                all_projects.put(project_name, id);
                 return;
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
@@ -80,7 +76,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                 all_projects.remove(projectName);
                 Integer count = this.getTasksCountForProject(projectId);
                 return count;
-
             }
             else {
                 throw new RuntimeException("Error");
@@ -245,14 +240,27 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
 
-
-
-
     public boolean existsByName(String name) {
         this.getProject();
         if (all_projects.containsKey(name)) {
             return true;
         }
         else {return false;}
+    }
+
+    public String getMessage() {
+        try (BufferedReader br = new BufferedReader(new FileReader("emotional_phrases"))) {
+            String line;
+            Integer i = 0;
+            while ((line = br.readLine()) != null) {
+                phrases.put(i, line);
+                i += 1;
+            }
+        } catch (IOException e) {
+        }
+        List<Integer> keysAsArray = new ArrayList<Integer>(phrases.keySet());
+        Random r = new Random();
+        String phrase = phrases.get(keysAsArray.get(r.nextInt(keysAsArray.size())));
+        return phrase;
     }
 }
