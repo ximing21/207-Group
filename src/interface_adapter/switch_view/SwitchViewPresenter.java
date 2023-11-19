@@ -1,7 +1,6 @@
 package interface_adapter.switch_view;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_project.AddProjectViewModel;
 import use_case.switch_view.SwitchViewOutputBoundary;
 
