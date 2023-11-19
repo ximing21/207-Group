@@ -1,5 +1,6 @@
 package use_case.close_task;
 
+
 public class CloseTaskInteractor implements CloseTaskInputBoundary {
     private final CloseTaskOutputBoundary presenter;
     private final CloseTaskDataAccessInterface dataAccess;
@@ -12,6 +13,8 @@ public class CloseTaskInteractor implements CloseTaskInputBoundary {
     @Override
     public void execute(CloseTaskInputData inputData) {
         dataAccess.closeTask(inputData.getTaskId());
-        presenter.prepareSuccessView();
+        String phrase = dataAccess.getMessage();
+        CloseTaskOutputData result = new CloseTaskOutputData(phrase);
+        presenter.prepareSuccessView(result);
     }
 }

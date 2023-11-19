@@ -2,13 +2,12 @@ package view;
 
 
 import entity.Task;
-import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_task.AddTaskController;
 import interface_adapter.add_task.AddTaskState;
 import interface_adapter.add_task.AddTaskViewModel;
-import interface_adapter.added_project.AddedProjectState;
 import interface_adapter.close_task.CloseTaskController;
-import interface_adapter.get_all_projects.GetProjectState;
+import interface_adapter.close_task.CloseTaskState;
+import interface_adapter.close_task.CloseTaskViewModel;
 import interface_adapter.get_task.GetTaskState;
 import interface_adapter.get_task.GetTaskViewModel;
 import interface_adapter.switch_view.SwitchViewController;
@@ -17,20 +16,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
     private final JLabel projectNameTitle;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
+    private final CloseTaskViewModel closeTaskViewModel;
     private final SwitchViewController switchViewController;
     private final CloseTaskController closeTaskController;
     private final AddTaskController addTaskController;
@@ -48,15 +43,17 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                        SwitchViewController switchViewController,
                        CloseTaskController closeTaskController,
                        AddTaskController addTaskController,
-                       AddTaskViewModel addTaskViewModel) {
+                       AddTaskViewModel addTaskViewModel, CloseTaskViewModel closeTaskViewModel) {
         this.getTaskViewModel = getTaskViewModel;
         this.switchViewController = switchViewController;
         this.closeTaskController = closeTaskController;
         this.addTaskController = addTaskController;
         this.addTaskViewModel = addTaskViewModel;
+        this.closeTaskViewModel = closeTaskViewModel;
 
         getTaskViewModel.addPropertyChangeListener(this);
         addTaskViewModel.addPropertyChangeListener(this);
+        closeTaskViewModel.addPropertyChangeListener(this);
 
         this.tasksArea = new JTextArea(10, 30);
         tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
@@ -190,8 +187,10 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                 String newTaskId = addTaskState.getTaskId();
                 newTaskCheckBox.addActionListener(e -> handleCheckBoxAction(newTaskId, newTaskCheckBox));
                 tasksArea.add(newTaskCheckBox, 0);
-
             }
+        } else if (state instanceof CloseTaskState) {
+            CloseTaskState closeTaskState = (CloseTaskState) state;
+            JOptionPane.showMessageDialog(this, closeTaskState.getPhrase());
         }
         tasksArea.revalidate();
         tasksArea.repaint();
