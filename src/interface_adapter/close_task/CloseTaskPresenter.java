@@ -15,9 +15,8 @@ public class CloseTaskPresenter implements CloseTaskOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView(CloseTaskOutputData response) {
+    public void prepareSuccessView() {
         CloseTaskState closeTaskState = closeTaskViewModel.getState();
-        closeTaskState.setPhrase(response.getPhrase());
         closeTaskViewModel.setState(closeTaskState);
         closeTaskViewModel.firePropertyChanged();
     }

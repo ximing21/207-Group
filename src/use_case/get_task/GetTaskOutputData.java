@@ -8,10 +8,12 @@ import java.util.ArrayList;
 public class GetTaskOutputData {
     private final ArrayList<Task> tasks;
     private final String projectName;
+    private final String message;
 
-    public GetTaskOutputData(Pair<String, ArrayList<Task>> result) {
+    public GetTaskOutputData(Pair<String, ArrayList<Task>> result, String message) {
         this.projectName= result.getFirst();
         this.tasks = result.getSecond();
+        this.message = message;
     }
 
     public ArrayList<Task> getTasks() {
@@ -21,4 +23,6 @@ public class GetTaskOutputData {
     public String getProjectName() {
         return projectName;
     }
+
+    public String getMessage() {return message;}
 }
