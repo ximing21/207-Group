@@ -60,7 +60,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
 
-    public Integer deleteProject(String projectName) {
+    public void deleteProject(String projectName) {
         this.getProject();
         String projectId = all_projects.get(projectName);
         OkHttpClient client = new OkHttpClient();
@@ -74,8 +74,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             if (response.code() == 204) {
                 all_projects.remove(projectName);
-                Integer count = this.getTasksCountForProject(projectId);
-                return count;
             }
             else {
                 throw new RuntimeException("Error");
