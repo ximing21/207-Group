@@ -16,9 +16,8 @@ public class DeleteProjectInteractor implements DeleteProjectInputBoundary {
     public void execute(DeleteProjectInputData deleteProjectInputData) {
         // if string name != null?
         String name = deleteProjectInputData.getName();
-        Integer count = dataAccessObject.deleteProject(name);
-        Pair<String,Integer> result = new Pair<>(name, count);
-        DeleteProjectOutputData project = new DeleteProjectOutputData(result);
+        dataAccessObject.deleteProject(name);
+        DeleteProjectOutputData project = new DeleteProjectOutputData(name);
         presenter.prepareSuccessView(project);
 
     }
