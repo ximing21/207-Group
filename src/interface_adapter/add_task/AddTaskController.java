@@ -4,7 +4,6 @@ import use_case.add_task.AddTaskInputBoundary;
 import use_case.add_task.AddTaskInputData;
 
 
-import java.io.IOException;
 
 public class AddTaskController {
     final AddTaskInputBoundary addTaskInteractor;

@@ -2,7 +2,6 @@ package interface_adapter.add_project;
 
 import interface_adapter.ViewModel;
 
-import javax.swing.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
