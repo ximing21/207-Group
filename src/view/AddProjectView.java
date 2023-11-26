@@ -103,7 +103,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addProject)) {
-                            String projectName = projectnameInputField.getText();
+                            String projectName = projectnameInputField.getText().trim();
                             if (!projectName.isEmpty()) {
                                 try {
                                     AddProjectState currentState = addProjectViewModel.getState();
