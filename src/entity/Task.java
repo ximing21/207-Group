@@ -14,7 +14,6 @@ public class Task{
         this.deadline = deadline;
     }
 
-
     public static TaskBuilder builder() {return new TaskBuilder();}
 
     public static class TaskBuilder {
@@ -46,7 +45,6 @@ public class Task{
             return this;
         }
 
-
         public Task build() {
             return new Task(taskId, taskName, projectId, deadline);
         }
@@ -68,6 +66,5 @@ public class Task{
     public String getDeadline() {
         return deadline;
     }
-
 
 }
