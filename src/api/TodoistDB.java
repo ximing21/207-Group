@@ -190,7 +190,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                                 .TaskId(element.getString("id"))
                                 .TaskName(element.getString("content"))
                                 .ProjectId(element.getString("project_id"))
-                                .IsCompleted(element.getBoolean("is_completed"))
                                 .Deadline(deadline)
                                 .build();
                         tasks.add(task);
