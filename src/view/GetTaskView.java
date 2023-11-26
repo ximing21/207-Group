@@ -49,7 +49,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         addTaskViewModel.addPropertyChangeListener(this);
 
         this.tasksArea = new JTextArea(10, 30);
-        tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
+        tasksArea.setEditable(false); // Disable text entry in tasksArea
         tasksArea.setLayout(new BoxLayout(tasksArea, BoxLayout.Y_AXIS));
 
         this.projectNameTitle = new JLabel(getTaskViewModel.getTitleLabel());

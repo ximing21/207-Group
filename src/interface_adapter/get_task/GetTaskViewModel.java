@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class GetTaskViewModel extends ViewModel {
     public String titleLabel = "?";
     public static final String ADD_TASK_BUTTON_LABEL = "Add Task";
-    public static final String TASK_NAME_LABEL = "Create a Task*:";
+    public static final String TASK_NAME_LABEL = "Create a task*:";
     public static final String DEADLINE_LABEL = "Due date(YYYY-MM-DD):";
     public static final String PROJECTS_BUTTON_LABEL = "Back to Projects";
     private GetTaskState state = new GetTaskState();
