@@ -9,7 +9,7 @@ public class AddProjectViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Create your project!";
     public static final String ADD_PROJECT_BUTTON_LABEL = "Add Project";
     public static final String GET_PROJECT_BUTTON_LABEL = "Get All Projects";
-    public static final String PROJECT_NAME_LABEL = "Choose project name:";
+    public static final String PROJECT_NAME_LABEL = "Create a project:";
     private AddProjectState state = new AddProjectState();
 
 
