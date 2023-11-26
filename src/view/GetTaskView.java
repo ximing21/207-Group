@@ -81,7 +81,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                             String deadlineString = deadlineInputField.getText().trim();
 
                             // Regular expression for the date format YYYY-MM-DD
-                            String dateFormatRegex = "^20\\d{2}-[01]\\d-[0123]\\d$";;
+                            String dateFormatRegex = "\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$";
 
                             if (!taskName.isEmpty() && (deadlineString.isEmpty() || deadlineString.matches(dateFormatRegex))) {
                                 try {
