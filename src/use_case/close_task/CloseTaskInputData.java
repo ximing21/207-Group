@@ -1,6 +1,6 @@
 package use_case.close_task;
 
-import entity.Project;
+// import entity.Project;
 
 public class CloseTaskInputData {
     final private String taskId;
