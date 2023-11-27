@@ -1,6 +1,5 @@
 package use_case.delete_project;
 
-import kotlin.Pair;
 
 public class DeleteProjectOutputData {
     private String projectName;
