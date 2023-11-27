@@ -1,7 +1,5 @@
 package interface_adapter.add_task;
 
-import interface_adapter.add_project.AddProjectState;
-import java.time.LocalDate;
 
 public class AddTaskState {
     private String project_name = "";

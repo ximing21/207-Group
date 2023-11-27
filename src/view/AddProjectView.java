@@ -103,7 +103,7 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(addProject)) {
-                            String projectName = projectnameInputField.getText();
+                            String projectName = projectnameInputField.getText().trim();
                             if (!projectName.isEmpty()) {
                                 try {
                                     AddProjectState currentState = addProjectViewModel.getState();
@@ -114,7 +114,9 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                                     ex.printStackTrace();
                                 }
                             }
-//                            JOptionPane.showMessageDialog(parent, currentState.getProject_name() +"successfully created");
+                            else {
+                                JOptionPane.showMessageDialog(null, "Please enter a project name");
+                            }
                         }
 
                     }
@@ -213,15 +215,19 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
             List<Project> projects = List.of(getProjectState.getProjects());
             listModel.clear();
             for (Project project : projects) {
-                String displayText = project.getName() + " (# tasks:" + project.getTaskCount() + ")";
+                String displayText = project.getName() + " (# tasks: " + project.getTaskCount() + ")";
                 listModel.addElement(displayText);
             }
         } else if (state instanceof DeleteProjectState) {
             DeleteProjectState deleteProjectState = (DeleteProjectState) state;
             String projectName = deleteProjectState.getProject_name();
-            Integer count = deleteProjectState.getCount();
-            String projectNameWithCount = projectName + " (# tasks: " + count.toString() +")";
-            listModel.removeElement(projectNameWithCount);
+            for (int i = 0; i < listModel.size(); i++) {
+                String current = listModel.get(i);
+                if (current.startsWith(projectName + " (")) {
+                    listModel.remove(i);
+                    break;
+                }
+            }
         }
     }
 }

@@ -33,26 +33,20 @@ public class Project {
             return this;
         }
 
-        public Project build() {
-            return new Project(projectId, projectName, taskCount);}
-
         public ProjectBuilder TaskCount(int taskCount) {
             this.taskCount = taskCount;
             return this;
         }
+
+        public Project build() {
+            return new Project(projectId, projectName, taskCount);}
     }
 
     public String getName() {
         return this.projectName;
     }
 
-    public String getId() {
-        return this.projectId;
-    }
-
     public int getTaskCount() {
         return this.taskCount;
     }
-
-
 }

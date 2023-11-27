@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
-    private final JLabel projectNameTitle;
+    public final JLabel projectNameTitle;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
     private final SwitchViewController switchViewController;
@@ -30,7 +30,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
     private final JButton addTask;
     private final JButton backToProjects;
-    private JTextArea tasksArea;
+    public JTextArea tasksArea;
 
 
 
@@ -49,7 +49,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         addTaskViewModel.addPropertyChangeListener(this);
 
         this.tasksArea = new JTextArea(10, 30);
-        tasksArea.setEditable(false); // 禁止在 tasksArea 中输入文本
+        tasksArea.setEditable(false); // Disable text entry in tasksArea
         tasksArea.setLayout(new BoxLayout(tasksArea, BoxLayout.Y_AXIS));
 
         this.projectNameTitle = new JLabel(getTaskViewModel.getTitleLabel());
@@ -81,21 +81,25 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
                             String deadlineString = deadlineInputField.getText().trim();
 
                             // Regular expression for the date format YYYY-MM-DD
-                            String dateFormatRegex = "^20\\d{2}-[01]\\d-[0123]\\d$";;
+                            String dateFormatRegex = "\\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$";
 
                             if (!taskName.isEmpty() && (deadlineString.isEmpty() || deadlineString.matches(dateFormatRegex))) {
                                 try {
 
                                     addTaskController.execute(taskName, deadlineString, getTaskViewModel.getTitleLabel());
 
-                                    taskNameInputField.setText(""); // Clear the input field
-                                    deadlineInputField.setText(""); // Clear the input field
+                                    // Clear the input field
+                                    taskNameInputField.setText("");
+                                    deadlineInputField.setText("");
+
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
                             } else if (!deadlineString.isEmpty() && !deadlineString.matches(dateFormatRegex)) {
                                 // Show error message if the deadline format is incorrect
-                                JOptionPane.showMessageDialog(null, "Invalid date or format. Please input a valid date in the format of YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null,
+                                        "Invalid date or format. Please input a valid date in the format of YYYY-MM-DD.",
+                                        "Invalid Input", JOptionPane.ERROR_MESSAGE);
                             }
                         }
 
@@ -134,8 +138,8 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public void actionPerformed(ActionEvent e) {
     }
 
-    JPanel panel = new JPanel();
-    JLabel message = new JLabel();
+    public JPanel panel = new JPanel();
+    public JLabel message = new JLabel();
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -194,7 +198,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         tasksArea.repaint();
     }
 
-    private void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
+    public void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
         if (checkBox.isSelected()) {
             try {
                 closeTaskController.execute(taskId);

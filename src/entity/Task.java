@@ -4,26 +4,15 @@ public class Task{
     private String taskId;
     private String taskName;
     private String projectId;
-    private Boolean isCompleted;
     private String deadline;
 
 
-    public Task(String taskId, String taskName, String projectId, Boolean isCompleted, String deadline) {
+    public Task(String taskId, String taskName, String projectId, String deadline) {
         this.taskId = taskId;
         this.taskName = taskName;
         this.projectId = projectId;
-        this.isCompleted = isCompleted;
         this.deadline = deadline;
     }
-
-    public boolean IsCompleted() {
-        return isCompleted;
-    }
-
-    public void setCompleted(boolean completed) {
-        isCompleted = completed;
-    }
-
 
     public static TaskBuilder builder() {return new TaskBuilder();}
 
@@ -31,7 +20,6 @@ public class Task{
         private String taskId;
         private String taskName;
         private String projectId;
-        private Boolean isCompleted;
         private String deadline;
 
         TaskBuilder() {
@@ -52,19 +40,13 @@ public class Task{
             return this;
         }
 
-        public TaskBuilder IsCompleted(Boolean isCompleted) {
-            this.isCompleted = isCompleted;
-            return this;
-        }
-
         public TaskBuilder Deadline(String deadline) {
             this.deadline = deadline;
             return this;
         }
 
-
         public Task build() {
-            return new Task(taskId, taskName, projectId, isCompleted, deadline);
+            return new Task(taskId, taskName, projectId, deadline);
         }
 
     }
@@ -84,6 +66,5 @@ public class Task{
     public String getDeadline() {
         return deadline;
     }
-
 
 }

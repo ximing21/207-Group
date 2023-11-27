@@ -22,7 +22,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.*;
-import java.time.LocalDate;
 
 public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAccessInterface, GetProjectDataAccessInterface, CloseTaskDataAccessInterface, AddTaskDataAccessInterface, DeleteProjectDataAccessInterface {
     private static final String API_TOKEN = System.getenv("API_TOKEN");
@@ -60,7 +59,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
 
-    public Integer deleteProject(String projectName) {
+    public void deleteProject(String projectName) {
         this.getProject();
         String projectId = all_projects.get(projectName);
         OkHttpClient client = new OkHttpClient();
@@ -74,8 +73,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             if (response.code() == 204) {
                 all_projects.remove(projectName);
-                Integer count = this.getTasksCountForProject(projectId);
-                return count;
             }
             else {
                 throw new RuntimeException("Error");
@@ -192,7 +189,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                                 .TaskId(element.getString("id"))
                                 .TaskName(element.getString("content"))
                                 .ProjectId(element.getString("project_id"))
-                                .IsCompleted(element.getBoolean("is_completed"))
                                 .Deadline(deadline)
                                 .build();
                         tasks.add(task);

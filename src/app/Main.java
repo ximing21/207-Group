@@ -25,7 +25,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Deadline Defenders");
+        JFrame application = new JFrame("Time! Todo");
         application.setLayout(new BorderLayout());
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
