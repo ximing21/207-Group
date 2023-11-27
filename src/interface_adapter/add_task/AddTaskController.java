@@ -12,7 +12,7 @@ public class AddTaskController {
     }
 
     public void execute(String taskName, String deadline, String projectName) {
-        AddTaskInputData addTaskInputData = new AddTaskInputData(taskName, deadline, projectName);
+        AddTaskInputData addTaskInputData = new AddTaskInputData(taskName, projectName, deadline);
         addTaskInteractor.execute(addTaskInputData);
     }
 }
