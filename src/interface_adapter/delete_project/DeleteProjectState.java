@@ -18,13 +18,4 @@ public class DeleteProjectState {
     public DeleteProjectState() {}
     public String getProject_name() {return project_name; }
 
-    public String getProject_nameError() {return project_nameError; }
-
-    public void setCount(Integer count) {
-        this.count = count;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
 }
