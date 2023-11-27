@@ -1,7 +1,5 @@
 package interface_adapter.get_task;
 
-import use_case.add_project.AddProjectInputBoundary;
-import use_case.add_project.AddProjectInputData;
 import use_case.get_task.GetTaskInputBoundary;
 import use_case.get_task.GetTaskInputData;
 

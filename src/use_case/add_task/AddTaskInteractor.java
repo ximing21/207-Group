@@ -1,9 +1,5 @@
 package use_case.add_task;
 
-import entity.Task;
-import use_case.add_project.AddProjectOutputData;
-
-import java.io.IOException;
 
 public class AddTaskInteractor implements AddTaskInputBoundary {
     final AddTaskOutputBoundary presenter;
