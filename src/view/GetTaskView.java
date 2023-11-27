@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class GetTaskView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "get task";
-    private final JLabel projectNameTitle;
+    public final JLabel projectNameTitle;
     private final GetTaskViewModel getTaskViewModel;
     private final AddTaskViewModel addTaskViewModel;
     private final SwitchViewController switchViewController;
@@ -30,7 +30,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
     private final JButton addTask;
     private final JButton backToProjects;
-    private JTextArea tasksArea;
+    public JTextArea tasksArea;
 
 
 
@@ -138,8 +138,8 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
     public void actionPerformed(ActionEvent e) {
     }
 
-    JPanel panel = new JPanel();
-    JLabel message = new JLabel();
+    public JPanel panel = new JPanel();
+    public JLabel message = new JLabel();
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
@@ -198,7 +198,7 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         tasksArea.repaint();
     }
 
-    private void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
+    public void handleCheckBoxAction(String taskId, JCheckBox checkBox) {
         if (checkBox.isSelected()) {
             try {
                 closeTaskController.execute(taskId);
