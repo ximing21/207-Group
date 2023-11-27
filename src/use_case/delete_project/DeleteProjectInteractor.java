@@ -1,8 +1,6 @@
 package use_case.delete_project;
 
 
-import kotlin.Pair;
-
 public class DeleteProjectInteractor implements DeleteProjectInputBoundary {
     final DeleteProjectOutputBoundary presenter;
     final DeleteProjectDataAccessInterface dataAccessObject;
