@@ -49,7 +49,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
-                return;
+//                all_projects.put(responseBody.getString("name"), responseBody.getString("id"));
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
