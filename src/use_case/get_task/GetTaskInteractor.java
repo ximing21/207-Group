@@ -2,12 +2,8 @@ package use_case.get_task;
 
 import entity.Task;
 import kotlin.Pair;
-import use_case.add_project.AddProjectDataAccessInterface;
-import use_case.add_project.AddProjectOutputBoundary;
-import use_case.add_project.AddProjectOutputData;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 
 public class GetTaskInteractor implements GetTaskInputBoundary{

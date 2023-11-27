@@ -2,9 +2,6 @@ package interface_adapter.get_all_projects;
 
 import entity.Project;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GetProjectState {
     private Project[] projects;
 
