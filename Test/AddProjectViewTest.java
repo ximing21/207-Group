@@ -59,5 +59,5 @@ public class AddProjectViewTest {
         // Test that actionPerformed method does not throw any exceptions
         addProjectView.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "command"));
     }
-
 }
+
