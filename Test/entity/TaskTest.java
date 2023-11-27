@@ -1,3 +1,5 @@
+package entity;
+
 import entity.Task;
 import org.junit.Test;
 

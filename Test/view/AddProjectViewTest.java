@@ -1,3 +1,5 @@
+package view;
+
 import interface_adapter.add_project.AddProjectController;
 import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_project.AddProjectViewModel;

@@ -1,3 +1,5 @@
+package view;
+
 import entity.Task;
 import interface_adapter.add_task.AddTaskController;
 import interface_adapter.add_task.AddTaskState;

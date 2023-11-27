@@ -1,3 +1,5 @@
+package app;
+
 import api.TodoistDB;
 import app.AddProjectUseCaseFactory;
 import interface_adapter.ViewManagerModel;
