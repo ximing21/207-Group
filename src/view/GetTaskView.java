@@ -88,14 +88,18 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
 
                                     addTaskController.execute(taskName, deadlineString, getTaskViewModel.getTitleLabel());
 
-                                    taskNameInputField.setText(""); // Clear the input field
-                                    deadlineInputField.setText(""); // Clear the input field
+                                    // Clear the input field
+                                    taskNameInputField.setText("");
+                                    deadlineInputField.setText("");
+
                                 } catch (Exception ex) {
                                     ex.printStackTrace();
                                 }
                             } else if (!deadlineString.isEmpty() && !deadlineString.matches(dateFormatRegex)) {
                                 // Show error message if the deadline format is incorrect
-                                JOptionPane.showMessageDialog(null, "Invalid date or format. Please input a valid date in the format of YYYY-MM-DD.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                                JOptionPane.showMessageDialog(null,
+                                        "Invalid date or format. Please input a valid date in the format of YYYY-MM-DD.",
+                                        "Invalid Input", JOptionPane.ERROR_MESSAGE);
                             }
                         }
 

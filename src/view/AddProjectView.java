@@ -114,7 +114,9 @@ public class AddProjectView extends JPanel implements ActionListener, PropertyCh
                                     ex.printStackTrace();
                                 }
                             }
-//                            JOptionPane.showMessageDialog(parent, currentState.getProject_name() +"successfully created");
+                            else {
+                                JOptionPane.showMessageDialog(null, "Please enter a project name");
+                            }
                         }
 
                     }
