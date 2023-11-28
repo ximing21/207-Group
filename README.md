@@ -1,4 +1,4 @@
-# Time! Todo (Time Management & To-do List Project)
+# Deadline Defender (Time Management & To-do List Project)
 
 ## Project Description
 Welcome to **Deadline Defender** – the ultimate task management tool designed to capture and organize your tasks the moment they pop into your mind. Remember deadlines with ease and manage your tasks efficiently.
