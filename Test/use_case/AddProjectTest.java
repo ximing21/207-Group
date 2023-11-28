@@ -3,6 +3,9 @@ package use_case;
 import api.TodoistDB;
 import org.junit.Test;
 import use_case.add_project.*;
+import use_case.delete_project.DeleteProjectInputBoundary;
+import use_case.delete_project.DeleteProjectInputData;
+import use_case.delete_project.DeleteProjectInteractor;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -19,7 +22,6 @@ public class AddProjectTest {
                 @Override
                 public void prepareSuccessView(AddProjectOutputData response) {
                     assertEquals("207", response.getName());
-
                 }
                 @Override
                 public void prepareFailView(String error) {
@@ -29,6 +31,8 @@ public class AddProjectTest {
             AddProjectInputData inputData = new AddProjectInputData("207");
             AddProjectInputBoundary interactor = new AddProjectInteractor(successPresenter,dataAccessObject);
             interactor.execute(inputData);
+            DeleteProjectInputData deleteProject = new DeleteProjectInputData("207");
+
         }
 
     }
