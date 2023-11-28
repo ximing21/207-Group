@@ -1,9 +1,9 @@
 # Time! Todo (Time Management & To-do List Project)
 
 ## Project Description
-Welcome to **Time! Todo** – the ultimate task management tool designed to capture and organize your tasks the moment they pop into your mind. Remember deadlines with ease and manage your tasks efficiently.
+Welcome to **Deadline Defender** – the ultimate task management tool designed to capture and organize your tasks the moment they pop into your mind. Remember deadlines with ease and manage your tasks efficiently.
 
-## About Time! Todo
+## About Deadline Defender
 
 In the hustle and bustle of daily life, keeping track of tasks and deadlines can be overwhelming. That's where Time! Todo comes in. Our application is designed to help you effectively manage your tasks through a minimalist design and user-friendly features. It's perfect for students, professionals, or anyone looking to streamline their day.
 
