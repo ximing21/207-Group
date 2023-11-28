@@ -1,7 +1,7 @@
 package use_case;
 
-import api.TodoistDB;
 import org.junit.Test;
+import org.mockito.Mockito;
 import use_case.add_project.*;
 
 import static org.junit.Assert.assertEquals;
@@ -9,16 +9,14 @@ import static org.junit.Assert.fail;
 
 
 public class AddProjectTest {
-        static String message = "";
-        static boolean popUpDiscovered = false;
-
         @Test
         public void successTest() {
-            AddProjectDataAccessInterface dataAccessObject = new TodoistDB();
+            AddProjectDataAccessInterface mockDataAccessObject = Mockito.mock(AddProjectDataAccessInterface.class);
+            Mockito.doNothing().when(mockDataAccessObject).createProject(Mockito.anyString());
             AddProjectOutputBoundary successPresenter = new AddProjectOutputBoundary() {
                 @Override
-                public void prepareSuccessView(AddProjectOutputData response) {
-                    assertEquals("207", response.getName());
+                public void prepareSuccessView(AddProjectOutputData project) {
+                    assertEquals("207", project.getName());
 
                 }
                 @Override
@@ -27,8 +25,9 @@ public class AddProjectTest {
                 }
             };
             AddProjectInputData inputData = new AddProjectInputData("207");
-            AddProjectInputBoundary interactor = new AddProjectInteractor(successPresenter,dataAccessObject);
+            AddProjectInputBoundary interactor = new AddProjectInteractor(successPresenter, mockDataAccessObject);
             interactor.execute(inputData);
+            Mockito.verify(mockDataAccessObject).createProject("207");
         }
 
     }
