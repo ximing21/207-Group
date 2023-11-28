@@ -77,36 +77,8 @@ public class AddProjectTest {
                 deleteInteractor.execute(deleteProjectInputData);
 
             }
-
-
-
-//            AddProjectInputData inputData = new AddProjectInputData("207");
-//            AddProjectInputBoundary interactor = new AddProjectInteractor(failPresenter, mockDAO);
-//            interactor.execute(inputData);
-//            try{
-//                AddProjectOutputBoundary failPresenter = new AddProjectOutputBoundary() {
-//                    @Override
-//                    public void prepareSuccessView(AddProjectOutputData response) {
-//                        fail("Use case failure is unexpected.");
-//                    }
-//                    @Override
-//                    public void prepareFailView(String error) {
-//                        assertEquals(error, "Project already exists.");
-//                    }
-//                };
-//                AddProjectInputData inputData = new AddProjectInputData("207");
-//                AddProjectInputBoundary interactor = new AddProjectInteractor(failPresenter, mockDAO);
-//                interactor.execute(inputData);
-//
-//            } catch (java.lang.AssertionError assertionError) {
-//                interactor.execute(inputData);
-
-            }
-//            AddProjectInputBoundary interactor = Mockito.mock(AddProjectInputBoundary.class);
-//            Mockito.doNothing().when(interactor).execute(inputData);
-//            interactor.execute(inputData);
-//            interactor.execute(inputData);
         }
+}
 
 
 
