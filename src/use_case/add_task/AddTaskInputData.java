@@ -5,7 +5,7 @@ public class AddTaskInputData {
     final private String deadline;
     final private String projectName;
 
-    public AddTaskInputData(String taskName, String deadline, String projectName) {
+    public AddTaskInputData(String taskName, String projectName, String deadline) {
         this.taskName = taskName;
         this.deadline = deadline;
         this.projectName = projectName;
