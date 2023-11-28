@@ -6,12 +6,11 @@ import use_case.add_task.AddTaskOutputData;
 
 public class AddTaskPresenter implements AddTaskOutputBoundary {
     private final AddTaskViewModel addTaskViewModel;
-    private final ViewManagerModel viewManagerModel;
+
 
 
     public AddTaskPresenter(AddTaskViewModel addTaskViewModel, ViewManagerModel viewManagerModel) {
         this.addTaskViewModel = addTaskViewModel;
-        this.viewManagerModel = viewManagerModel;
     }
 
 
