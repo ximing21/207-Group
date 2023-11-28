@@ -17,7 +17,7 @@ In the hustle and bustle of daily life, keeping track of tasks and deadlines can
   - **Get All Projects**: View all projects in one place for a comprehensive overview.
   - **Delete Project**: Delete a project once all its tasks are completed.
   - **Add Task**: Easily add tasks to any project.
-  - **close Task**: Easily close tasks in a project.
+  - **Close Task**: Easily close tasks in a project.
   - **Get All Tasks**: Get an overview of all tasks within a project.
 
 ### Use Cases
