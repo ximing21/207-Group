@@ -19,7 +19,7 @@ In the hustle and bustle of daily life, keeping track of tasks and deadlines can
   - **Add Task**: Easily add tasks to any project.
   - **Close Task**: Mark tasks as completed effortlessly.
   - **Get All Tasks**: Get an overview of all tasks within a project.
-  - **Switch View** Effortlessly toggle from task view to project view to suit your needs.
+  - **Switch View**: Effortlessly toggle from task view to project view to suit your needs.
 
 ### Use Cases
 - **1.** Jacob, a college student, manages his courses by creating a unique project for each.
