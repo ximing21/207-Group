@@ -15,17 +15,19 @@ In the hustle and bustle of daily life, keeping track of tasks and deadlines can
 ### To-Do List Management
   - **Add Project**: Organize tasks into different projects for better management.
   - **Get All Projects**: View all projects in one place for a comprehensive overview.
-  - **Delete Project**: Delete a project once all its tasks are completed.
+  - **Delete Project**: Remove completed projects to maintain a clutter-free workspace.
   - **Add Task**: Easily add tasks to any project.
-  - **Close Task**: Easily close tasks in a project.
+  - **Close Task**: Mark tasks as completed effortlessly.
   - **Get All Tasks**: Get an overview of all tasks within a project.
+  - **Switch View** Effortlessly toggle from task view to project view to suit your needs.
 
 ### Use Cases
-- **1.** Jacob, a college student, organizes his courses by creating a separate project for each one.
-- **2.** Jacob can double-click the project name to get an overview of all tasks for the project.
-- **3.** Jacob can delete a project by right-clicking the project name.
-- **4.** Jacob can add new tasks to any project, either with or without a deadline, based on his needs.
-- **5.** Jacob can check-off tasks after finishing it.
+- **1.** Jacob, a college student, manages his courses by creating a unique project for each.
+- **2.** Jacob can quickly view all tasks for a project by double-clicking its name.
+- **3.** For project deletion, Jacob simply right-clicks on the project name.
+- **4.** Jacob easily adds new tasks to his projects, with or without deadlines, as required.
+- **5.** Completing tasks is satisfying for Jacob, as he can check them off upon completion.
+- **6.** Jacob can use the switch view feature to effortlessly toggle between different viewing modes for his projects.
 
 
 ## API Documentation
