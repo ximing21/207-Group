@@ -5,7 +5,7 @@ Welcome to **Deadline Defender** – the ultimate task management tool designed 
 
 ## About Deadline Defender
 
-In the hustle and bustle of daily life, keeping track of tasks and deadlines can be overwhelming. That's where Time! Todo comes in. Our application is designed to help you effectively manage your tasks through a minimalist design and user-friendly features. It's perfect for students, professionals, or anyone looking to streamline their day.
+In the hustle and bustle of daily life, keeping track of tasks and deadlines can be overwhelming. That's where Deadline Defender comes in. Our application is designed to help you effectively manage your tasks through a minimalist design and user-friendly features. It's perfect for students, professionals, or anyone looking to streamline their day.
 
 ## Key Features
 
