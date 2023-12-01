@@ -1,5 +1,6 @@
 package use_case;
 
+import org.junit.After;
 import org.mockito.Mockito;
 import api.TodoistDB;
 import org.junit.Test;
@@ -59,9 +60,12 @@ public class AddProjectTest {
                         assertEquals(error, "Project already exists.");
                     }
                 };
+
                 AddProjectInputData inputData = new AddProjectInputData("207");
                 AddProjectInputBoundary interactor = new AddProjectInteractor(failPresenter, dataAccessInterface);
                 interactor.execute(inputData);
+
+                // clean up the database
                 DeleteProjectInputData deleteProjectInputData = new DeleteProjectInputData("207");
                 DeleteProjectOutputBoundary deletePresenter = new DeleteProjectOutputBoundary() {
                     @Override
