@@ -25,9 +25,9 @@ In the hustle and bustle of daily life, keeping track of tasks and deadlines can
 - **1.** Jacob, a college student, manages his courses by creating a unique project for each.
 - **2.** Jacob can quickly view all tasks for a project by double-clicking its name.
 - **3.** For project deletion, Jacob simply right-clicks on the project name.
-- **4.** Jacob easily adds new tasks to his projects, with or without deadlines, as required.
+- **4.** Jacob easily adds new tasks to his projects, with or without deadlines, as needed.
 - **5.** Completing tasks is satisfying for Jacob, as he can check them off upon completion.
-- **6.** Jacob can use the switch view feature to effortlessly toggle between different viewing modes for his projects.
+- **6.** Jacob can use the switch view feature to toggle between different viewing modes for his projects effortlessly.
 
 
 ## API Documentation
