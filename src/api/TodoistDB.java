@@ -13,6 +13,7 @@ import use_case.close_task.CloseTaskDataAccessInterface;
 import use_case.delete_project.DeleteProjectDataAccessInterface;
 import use_case.get_all_projects.GetProjectDataAccessInterface;
 import use_case.get_task.GetTaskDataAccessInterface;
+import api.FileLinesIterator;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -49,7 +50,6 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
-//                all_projects.put(responseBody.getString("name"), responseBody.getString("id"));
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
@@ -245,15 +245,25 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
     public String getMessage() {
-        try (BufferedReader br = new BufferedReader(new FileReader("emotional_phrases"))) {
-            String line;
-            Integer i = 0;
-            while ((line = br.readLine()) != null) {
-                phrases.put(i, line);
-                i += 1;
+        String filePath = "emotional_phrases";
+        int i = 0;
+
+        try (FileLinesIterator iterator = new FileLinesIterator(filePath)) {
+            while (iterator.hasNext()) {
+                phrases.put(i++, iterator.next());
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
+//        try (BufferedReader br = new BufferedReader(new FileReader("emotional_phrases"))) {
+//            String line;
+//            Integer i = 0;
+//            while ((line = br.readLine()) != null) {
+//                phrases.put(i, line);
+//                i += 1;
+//            }
+//        } catch (IOException e) {
+//        }
         List<Integer> keysAsArray = new ArrayList<Integer>(phrases.keySet());
         Random r = new Random();
         String phrase = phrases.get(keysAsArray.get(r.nextInt(keysAsArray.size())));
