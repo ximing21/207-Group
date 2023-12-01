@@ -25,11 +25,7 @@ public class SwitchViewTest {
         addProjectViewModel = Mockito.mock(AddProjectViewModel.class);
         viewManagerModel = Mockito.mock(ViewManagerModel.class);
         presenter = Mockito.mock(SwitchViewOutputBoundary.class);
-
-
         Mockito.when(addProjectViewModel.getViewName()).thenReturn("AddProjectView");
-
-
         switchViewPresenter = new SwitchViewPresenter(addProjectViewModel, viewManagerModel);
         switchViewInteractor = new SwitchViewInteractor(presenter);
     }
