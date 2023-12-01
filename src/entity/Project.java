@@ -42,6 +42,10 @@ public class Project {
             return new Project(projectId, projectName, taskCount);}
     }
 
+    public String getProjectId() {
+        return projectId;
+    }
+
     public String getName() {
         return this.projectName;
     }

@@ -18,9 +18,9 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
     @Override
     public void execute(GetTaskInputData getTaskInputData) {
         // If the project name does not exist (this would never be executed based on our design
-        if (dataAccessObject.existsByName(getTaskInputData.getName()) == false) {
-            presenter.prepareFailView("Project does not exist.");
-        } else {
+//        if (dataAccessObject.existsByName(getTaskInputData.getName()) == false) {
+//            presenter.prepareFailView("Project does not exist.");
+//        } else {
             String name = getTaskInputData.getName();
             Pair<String, ArrayList<Task>> result = dataAccessObject.getTasks(name);
             String message = dataAccessObject.getMessage();
@@ -29,4 +29,4 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
         }
 
     }
-}
+//}
