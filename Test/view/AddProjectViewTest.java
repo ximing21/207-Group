@@ -7,9 +7,6 @@ import interface_adapter.add_project.AddProjectController;
 import interface_adapter.add_project.AddProjectPresenter;
 import interface_adapter.add_project.AddProjectState;
 import interface_adapter.add_project.AddProjectViewModel;
-import interface_adapter.add_task.AddTaskPresenter;
-import interface_adapter.add_task.AddTaskState;
-import interface_adapter.add_task.AddTaskViewModel;
 import interface_adapter.added_project.AddedProjectState;
 import interface_adapter.added_project.AddedProjectViewModel;
 import interface_adapter.delete_project.DeleteProjectController;
@@ -45,7 +42,6 @@ public class AddProjectViewTest {
     private AddProjectView addProjectView;
     static String message = "";
     static boolean popUpDiscovered = false;
-    private java.util.List<String> projectList;
     private AddProjectViewModel mockViewModel;
     private ViewManagerModel mockViewManagerModel;
     private AddProjectPresenter presenter;
@@ -199,11 +195,9 @@ public class AddProjectViewTest {
 
         JButton button = getAddProjectButton();
 
-
         // since clicking the button should end up displaying a JDialog to the user to report the
         // result, we set a timer, which will execute code necessary to complete the testing.
         createCloseTimer().start();
-
         //click the button
         button.doClick();
 
@@ -212,23 +206,6 @@ public class AddProjectViewTest {
         // confirm a popUp was discovered
         assert(popUpDiscovered);
         System.out.println("popup was detected successfully.");
-    }
-
-    @org.junit.Test
-    public void testProjectAdded() {
-
-        addProject();
-        Main.main(null);
-        JButton button = getAddProjectButton();
-
-        // since clicking the button should end up displaying a JDialog to the user to report the
-        // result, we set a timer, which will execute code necessary to complete the testing.
-        createCloseTimer().start();
-
-        button.doClick();
-
-        // will continue execution here after the JDialog is closed
-//        assertEquals(mockState, new AddProjectState());
     }
 
     @Test
@@ -299,8 +276,6 @@ public class AddProjectViewTest {
         // This can include setting up the list model, mock states, etc.
     }
 
-
-
     @Test
     public void testErrorHandling() {
         doThrow(new RuntimeException("Mock Exception")).when(addProjectController).execute(anyString());
@@ -316,9 +291,4 @@ public class AddProjectViewTest {
         assertTrue("Project name input should be visible", addProjectView.projectnameInputField.isVisible());
         assertTrue("Add project button should be visible", addProjectView.addProject.isVisible());
     }
-
-
-
-
 }
-
