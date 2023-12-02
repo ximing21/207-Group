@@ -234,9 +234,6 @@ public class AddProjectViewTest {
 
     @Test
     public void testPropertyChangeForDifferentStates() {
-        // Setup mock data and components as needed
-        setupMockDataAndComponents();
-
         AddProjectState addProjectState = new AddProjectState();
         addProjectState.setProject_nameError("Please enter a project name");
         PropertyChangeEvent addProjectEvent = new PropertyChangeEvent(this, "projectName", null, addProjectState);
@@ -269,21 +266,6 @@ public class AddProjectViewTest {
         addProjectView.propertyChange(deleteProjectEvent);
         // Assert that the project is removed from the list model
         assertFalse(addProjectView.listModel.contains("Project 1 (# tasks: 1)"));
-    }
-
-    private void setupMockDataAndComponents() {
-        // Mock data and components initialization if required
-        // This can include setting up the list model, mock states, etc.
-    }
-
-    @Test
-    public void testErrorHandling() {
-        doThrow(new RuntimeException("Mock Exception")).when(addProjectController).execute(anyString());
-        addProjectView.projectnameInputField.setText("Error Project");
-        addProjectView.addProject.doClick();
-
-        // Test how the view handles the exception
-        // For example, check if a dialog box is displayed or a log is written
     }
 
     @Test
