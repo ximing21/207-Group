@@ -19,18 +19,15 @@ import interface_adapter.get_all_projects.GetProjectController;
 import interface_adapter.get_all_projects.GetProjectState;
 import interface_adapter.get_all_projects.GetProjectViewModel;
 import interface_adapter.get_task.GetTaskController;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
-import use_case.add_project.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
