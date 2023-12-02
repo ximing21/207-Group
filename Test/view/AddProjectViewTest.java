@@ -48,7 +48,7 @@ public class AddProjectViewTest {
     private AddProjectViewModel mockViewModel;
     private ViewManagerModel mockViewManagerModel;
     private AddProjectPresenter presenter;
-    private AddProjectState mockState;
+    private AddedProjectState mockState;
     private AddedProjectViewModel mockAddedProjectViewModel;
 
     @Before
@@ -180,9 +180,9 @@ public class AddProjectViewTest {
         mockViewModel = Mockito.mock(AddProjectViewModel.class);
         mockAddedProjectViewModel = Mockito.mock(AddedProjectViewModel.class);
         mockViewManagerModel = Mockito.mock(ViewManagerModel.class);
-        mockState = Mockito.mock(AddProjectState.class);
+        mockState = Mockito.mock(AddedProjectState.class);
 
-        Mockito.when(mockViewModel.getState()).thenReturn(mockState);
+        Mockito.when(mockAddedProjectViewModel.getState()).thenReturn(mockState);
 
         presenter = new AddProjectPresenter(mockViewModel, mockAddedProjectViewModel, mockViewManagerModel);
     }
@@ -227,7 +227,7 @@ public class AddProjectViewTest {
         button.doClick();
 
         // will continue execution here after the JDialog is closed
-//        assertEquals(mockState, new AddProjectState());
+        assertEquals(mockState.getClass(), new AddedProjectState().getClass());
 
 
 
