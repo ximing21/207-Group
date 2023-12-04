@@ -6,12 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class DeleteProjectViewModel extends ViewModel {
-    public static final String TITLE_LABEL = "Delete Project";
-    public static final String YES_CANCEL_PROJECT_BUTTON_LABEL = "Yes";
-    public static final String NO_CANCEL_PROJECT_BUTTON_LABEL = "No";
-    public static final String PROJECT_NAME_LABEL = "Choose project name:";
     private DeleteProjectState state = new DeleteProjectState();
-
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
