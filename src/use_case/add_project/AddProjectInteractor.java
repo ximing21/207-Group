@@ -1,5 +1,7 @@
 package use_case.add_project;
 
+import entity.Project;
+
 public class AddProjectInteractor implements AddProjectInputBoundary {
     final AddProjectOutputBoundary presenter;
     final AddProjectDataAccessInterface dataAccessObject;
@@ -17,9 +19,9 @@ public class AddProjectInteractor implements AddProjectInputBoundary {
             presenter.prepareFailView("Project already exists.");
         } else {
             String name = addProjectInputData.getName();
-            dataAccessObject.createProject(name);
+            Project project = dataAccessObject.createProject(name);
 
-            AddProjectOutputData addProjectOutputData = new AddProjectOutputData(name);
+            AddProjectOutputData addProjectOutputData = new AddProjectOutputData(project.getName());
             presenter.prepareSuccessView(addProjectOutputData);
         }
     }

@@ -34,7 +34,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     private final Map<Integer, String> phrases = new HashMap<>();
 
     @Override
-    public void createProject(String name) {
+    public Project createProject(String name) {
         OkHttpClient client = new OkHttpClient().newBuilder().build();
         MediaType mediaType = MediaType.parse("application/json");
         JSONObject requestBody = new JSONObject();
@@ -50,6 +50,14 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
+                String projectId = responseBody.getString("id");
+                int taskCount = getTasksCountForProject(projectId);
+                Project project = Project.builder()
+                        .ProjectId(projectId)
+                        .ProjectName(responseBody.getString("name"))
+                        .TaskCount(taskCount)
+                        .build();
+                return project;
             } else {
                 throw new RuntimeException(responseBody.getString("message"));
             }
