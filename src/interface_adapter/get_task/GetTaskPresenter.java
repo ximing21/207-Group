@@ -19,7 +19,10 @@ public class GetTaskPresenter implements GetTaskOutputBoundary {
         // On success, switch to task view
         String projectName = response.getProjectName();
         GetTaskState getTaskState = getTaskViewModel.getState();
-        getTaskState.setTasks(response.getTasks());
+//        getTaskState.setTasks(response.getTasks());
+        getTaskState.setTaskId(response.getTaskId());
+        getTaskState.setTaskName(response.getTaskName());
+        getTaskState.setTaskDeadline(response.getTaskDeadline());
         getTaskState.setMessage(response.getMessage());
         getTaskViewModel.setState(getTaskState);
         getTaskViewModel.firePropertyChanged();

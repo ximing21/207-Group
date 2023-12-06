@@ -154,20 +154,35 @@ public class GetTaskView extends JPanel implements ActionListener, PropertyChang
         if (state instanceof GetTaskState) {
             GetTaskState getTaskState = (GetTaskState) state;
 
-            java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
+//            java.util.List<Task> tasks = new ArrayList<>(getTaskState.getTasks());
+//
+//            tasksArea.removeAll();
+//            for (Task task : tasks) {
+//
+//                String deadlineText = task.getDeadline() != null && !task.getDeadline().isEmpty()
+//                        ? " (Deadline: " + task.getDeadline() + ")"
+//                        : ""; // If there is no deadline, it is not displayed
+//                String taskText = task.getTaskName() + deadlineText;
+//                JCheckBox checkBox = new JCheckBox(taskText);
+//
+//                checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
+//                tasksArea.add(checkBox);
+//            }
 
+            ArrayList<String> taskName = getTaskState.getTaskName();
+            ArrayList<String> taskId = getTaskState.getTaskId();
+            ArrayList<String> taskDeadline = getTaskState.getTaskDeadline();
             tasksArea.removeAll();
-            for (Task task : tasks) {
-
-                String deadlineText = task.getDeadline() != null && !task.getDeadline().isEmpty()
-                        ? " (Deadline: " + task.getDeadline() + ")"
+            for (int s = 0; s != taskName.size(); s ++) {
+                String deadlineText = taskDeadline.get(s) != null && !taskDeadline.get(s).isEmpty()
+                        ? " (Deadline: " + taskDeadline.get(s) + ")"
                         : ""; // If there is no deadline, it is not displayed
-                String taskText = task.getTaskName() + deadlineText;
+                String taskText = taskName.get(s) + deadlineText;
                 JCheckBox checkBox = new JCheckBox(taskText);
-
-                checkBox.addActionListener(e -> handleCheckBoxAction(task.getTaskId(), checkBox));
+                int finalS = s;
+                checkBox.addActionListener(e -> handleCheckBoxAction(taskId.get(finalS), checkBox));
                 tasksArea.add(checkBox);
-            }
+            };
 
             message.setText(getTaskState.getMessage());
             message.setFont(new Font("Serif", Font.ITALIC, 15));
