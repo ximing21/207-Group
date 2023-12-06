@@ -168,7 +168,7 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
     }
 
     //Precondition: the project name provided exists
-    public Pair<String, ArrayList<Task>> getTasks(String name) {
+    public Pair<String, ArrayList<ArrayList<String>>> getTasks(String name) {
         this.getProject();
         String id = all_projects.get(name);
         OkHttpClient client = new OkHttpClient().newBuilder()
@@ -182,9 +182,13 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
             Response response = client.newCall(request).execute();
             JSONArray responseBody = new JSONArray(response.body().string());
             if (response.code() == 200) {
-                ArrayList<Task> tasks = new ArrayList<>();
+//                ArrayList<Task> tasks = new ArrayList<>();
+                ArrayList<String> taskName = new ArrayList<>();
+                ArrayList<String> taskId = new ArrayList<>();
+                ArrayList<String> taskDeadline = new ArrayList<>();
                 for (int i = 0; i < responseBody.length(); i++) {
                     JSONObject element = responseBody.getJSONObject(i);
+
                     if (element.getString("project_id").equals(id)) {
 
                         String deadline = "";
@@ -192,17 +196,25 @@ public class TodoistDB implements AddProjectDataAccessInterface, GetTaskDataAcce
                             JSONObject dueObject = element.getJSONObject("due");
                             deadline = dueObject.getString("string");
                         }
+                        taskName.add(element.getString("content"));
+                        taskId.add(element.getString("id"));
+                        taskDeadline.add(deadline);
+//                        Task task = Task.builder()
+//                                .TaskId(element.getString("id"))
+//                                .TaskName(element.getString("content"))
+//                                .ProjectId(element.getString("project_id"))
+//                                .Deadline(deadline)
+//                                .build();
+//                        tasks.add(task);
 
-                        Task task = Task.builder()
-                                .TaskId(element.getString("id"))
-                                .TaskName(element.getString("content"))
-                                .ProjectId(element.getString("project_id"))
-                                .Deadline(deadline)
-                                .build();
-                        tasks.add(task);
                     }
                 }
-                Pair<String, ArrayList<Task>> result = new Pair<>(name, tasks);
+                ArrayList<ArrayList<String>> task = new ArrayList<>();
+                task.add(taskName);
+                task.add(taskId);
+                task.add(taskDeadline);
+//                Pair<String, ArrayList<Task>> result = new Pair<>(name, tasks);
+                Pair<String, ArrayList<ArrayList<String>>> result = new Pair<>(name, task);
                 return result;
             } else {
                 throw new RuntimeException("Error");

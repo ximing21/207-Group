@@ -22,7 +22,7 @@ public class GetTaskInteractor implements GetTaskInputBoundary{
 //            presenter.prepareFailView("Project does not exist.");
 //        } else {
             String name = getTaskInputData.getName();
-            Pair<String, ArrayList<Task>> result = dataAccessObject.getTasks(name);
+            Pair<String, ArrayList<ArrayList<String>>> result = dataAccessObject.getTasks(name);
             String message = dataAccessObject.getMessage();
             GetTaskOutputData getTaskOutputData = new GetTaskOutputData(result, message);
             presenter.prepareSuccessView(getTaskOutputData);
